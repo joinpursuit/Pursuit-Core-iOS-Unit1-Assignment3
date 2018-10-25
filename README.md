@@ -151,5 +151,5 @@ Total Points 40.0
 **Command-Line Calculator**  
 
 <p align="center">
-    <img src="https://github.com/alexpaul/LessonDrafts/blob/master/Homework/Images/cli-calculator.gif" width="800" height="598" />
+    <img src="https://github.com/joinpursuit/Pursuit-Core-iOS-Unit1-Assignment3/blob/master/Images/cli-calculator.gif" width="800" height="598" />
 </p>
