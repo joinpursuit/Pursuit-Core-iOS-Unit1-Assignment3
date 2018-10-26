@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+//Initial Push
 func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
   switch opString {
   case "+":
