@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 func mathStuffFactory(opString: String) -> (_ x:Double, _ y:Double) -> Double {
     switch opString {
     case "+":
@@ -31,40 +32,72 @@ var stringOperator = " "
 var isThisADouble = false
 var isThisAnotherDouble = false
 var isThisAnOperator = false
+var calculateOperation = true
+var letUsCalculate = true
+var newValidOperation = true
+var componentOfOperation = [String]()
+
 //var arrayOfOperatorForRandom = ["+","-","/","*", "?"]
 
 
-let validOperation = true
+var validOperation = true
 
-while validOperation {
-    print("Enter a two digit operation: 5 + 5")
-    let userOperation = readLine() ?? "not a value"
-    
-    let componentOfOperation = userOperation.components(separatedBy: " ")
-    print(componentOfOperation)
-    
-    //if you are not giving me digit, operator, digit - three elements not getting in
-    
-    if let firstNum = Double(componentOfOperation[componentOfOperation.startIndex]){
-        num1 = firstNum
-    } else {
-        print("this is not a valid entry")
-        continue
-    }
-    if let secondNum = Double(componentOfOperation[componentOfOperation.endIndex-1]){
-        num2 = secondNum
-    } else {
-        print("this is not a valid entry")
-        continue
+while letUsCalculate {
+    while validOperation{
+        print("Enter a two digit operation: 5 + 5")
+        let userOperation = readLine() ?? "not a value"
+        componentOfOperation = userOperation.components(separatedBy: " ")
+        if componentOfOperation.count == 3{
+            print("calculating...")
+            validOperation = false
+            calculateOperation = true
+        } else {
+            print("invalid entry")
+            continue
+        }
+        
     }
     
-    guard componentOfOperation[1] != "/" || num2 != 0 else { //still get a fatal error if I do not enter a second character - for later
-        print("Invalid operation")
-        continue}
-    
-    print(mathStuffFactory(opString: componentOfOperation[1])(num1, num2)) // proof for fatal error
-    
+    while calculateOperation{
+        
+        if let firstNum = Double(componentOfOperation[componentOfOperation.startIndex]){
+            num1 = firstNum
+        } else {
+            print("this is not a valid entry")
+            continue
+        }
+        if let secondNum = Double(componentOfOperation[componentOfOperation.endIndex-1]){
+            num2 = secondNum
+        } else {
+            print("this is not a valid entry")
+            continue
+        }
+        
+        guard componentOfOperation[1] != "/" || num2 != 0 else {
+            print("Invalid operation")
+            
+            break}
+        
+        print(mathStuffFactory(opString: componentOfOperation[1])(num1, num2)) // proof for fatal error
+        calculateOperation = false
+        newValidOperation = true
+        
+    }
+    while newValidOperation{
+        print("If you need to calculate another thing, type: yes")
+        let nextOperation = readLine()?.lowercased() ?? "not a value"
+        switch nextOperation{
+        case "yes":
+            validOperation = true
+            newValidOperation = false
+        default:
+            print("thanks for calculating with us!")
+            newValidOperation = false
+        }
+    }
 }
+
+
 
 //filter function
 func myFilter(inputArray: [Int], filter: (Int) -> Bool) -> [Int] {
