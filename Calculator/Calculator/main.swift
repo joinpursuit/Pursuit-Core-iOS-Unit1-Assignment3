@@ -290,7 +290,7 @@ while appLoop {
             }
             
             if userConditionNumArr.contains(nil) {
-                print("3-Invalid Input. Please check your format for the last number for your condition. Try Again.\n")
+                print("Invalid Input. Please check your format for the last number for your condition. Try Again.\n")
                 sleep(1)
                 highOrderCalc()
             }
