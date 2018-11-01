@@ -24,7 +24,7 @@ func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
 }
 while true {
 var filterEmptyArray: [Int] = []
-var mapEmptyArray: [Int] = []
+var mapEmptyArray: [Double] = []
 var reduceEmptyArray = Int()
     
 func filter (userIn: String , numArray: [Int], filterBy: (Int)) -> [Int] {
@@ -52,22 +52,22 @@ func filter (userIn: String , numArray: [Int], filterBy: (Int)) -> [Int] {
     return filterEmptyArray
     }
     
-func map (userIn: String , numArray: [Int], mappedBy: (Int)) -> [Int] {
+func map (userIn: String , numArray: [Double], mappedBy: (Double)) -> [Double] {
     switch userIn {
     case "*":
         for numbers in numArray {
             mapEmptyArray.append(numbers * mappedBy)
         }
-    case "+":
+    case "/":
         for numbers in numArray {
-            mapEmptyArray.append(numbers + mappedBy)
+            mapEmptyArray.append(numbers / mappedBy)
         }
     default:
         print("WRONG INPUT, PLEASE CHOOSE + or *")
     }
     return mapEmptyArray
 }
-    func reduce (userIn: String , numArray: [Int], reducedBy: (Int)) -> (Int) {
+func reduce (userIn: String , numArray: [Int], reducedBy: (Int)) -> (Int) {
         var reduceEmptyArray = reducedBy
         switch userIn {
         case "+":
@@ -84,9 +84,14 @@ func map (userIn: String , numArray: [Int], mappedBy: (Int)) -> [Int] {
         }
         return reduceEmptyArray
     }
-
+    print("")
     print("Enter type of calculation REGULAR [1] OR HIGH ORDER [2] ")
-    if var userChoice = readLine() {
+    if let userChoice = readLine() {
+        if userChoice.isEmpty {
+            print("NO CALCULATION")
+            continue
+        }
+    
     switch userChoice{
     case "1":
         let addition = mathStuffFactory(opString: "+")
@@ -95,9 +100,17 @@ func map (userIn: String , numArray: [Int], mappedBy: (Int)) -> [Int] {
         let division = mathStuffFactory(opString: "/")
         let symbols = ["+", "-", "*", "/"]
         let oparations = [addition,subtraction,multiplication,division]
-        print("Please enter calculation")
+        print("PLEASE ENTER CALCULATION")
         if let userChoice = readLine() {
+            if userChoice.isEmpty {
+                print("NO CALCULATION")
+                continue
+            }
         let userChoiceArray = userChoice.components(separatedBy: " ")
+            if userChoiceArray.count != 3 {
+                print("WRONG INPUT PLEASE ENTER, E.G 2 + 2")
+                continue
+            }
         let numbers = userChoiceArray.compactMap({Double($0)})
         switch userChoiceArray[1] {
         case "+":
@@ -116,7 +129,7 @@ func map (userIn: String , numArray: [Int], mappedBy: (Int)) -> [Int] {
             if userChoice == symbols[random]{
                 print("CORRECT!")
             } else {
-                print("WRONG!")
+                print("WRONG! THE ANSWER WAS \(symbols[random])")
             }
             }
         
@@ -128,36 +141,47 @@ func map (userIn: String , numArray: [Int], mappedBy: (Int)) -> [Int] {
     case "2":
         print("""
 PLEASE ENTER TYPE OF CALCULATION (ENTER AS SHOWN) e.g filter 1,2,3,4,5,6 by < 5
-                                                      map 1,2,4,5,6,7 by + 5
+                                                      map 1,2,4,5,6,7 by / 5
                                                       reduce 1,2,3,4,5,6,7 by * 5
 
 """)
-        userChoice = readLine()!
+        if let userChoice = readLine()?.lowercased() {
+            
+            if userChoice.isEmpty {
+                print("NO CALCULATION")
+                continue
+            }
         let highOrderArray = userChoice.components(separatedBy: " ") //["filter", "1,2,3,4,5,6", "by", "<", "5"]
-        print(highOrderArray)
+            if highOrderArray.count != 5 {
+                print("WRONG INPUT PLEASE ENTER, E.G filter 1,2,3,4,5,6 by < 5 ")
+                continue
+            }
         let highOrderNumArray = highOrderArray[1].components(separatedBy: ",")
         let numbersHighOrder = highOrderNumArray.compactMap({Int($0)})
         let lastNumOfHighOrder = highOrderArray.compactMap({Int($0)})
+        let doubleForMap = highOrderNumArray.compactMap({Double($0)})
+        let doubleLastNum = highOrderArray.compactMap({Double($0)})
         var lastNum = Int()
         for numbers in lastNumOfHighOrder{
             lastNum = numbers
+
         }
         let highOrderOperator = highOrderArray[highOrderArray.count - 2]
         if userChoice.contains("filter") {
            let filterSolution = filter(userIn: highOrderOperator, numArray: numbersHighOrder, filterBy: lastNum)
             print("\(userChoice) = \(filterSolution)")
-            }
-        if userChoice.contains("map") {
-            let mapSolution = map(userIn: highOrderOperator, numArray: numbersHighOrder, mappedBy: lastNum)
+        } else if userChoice.contains("map") {
+            let mapSolution = map(userIn: highOrderOperator, numArray: doubleForMap, mappedBy: doubleLastNum[0])
             print(mapSolution)
-        }
-        if userChoice.contains("reduce"){
+        
+        } else if userChoice.contains("reduce"){
             let reduceSolution = reduce(userIn: highOrderOperator, numArray: numbersHighOrder, reducedBy: lastNum)
             print("\(userChoice) = \(reduceSolution)")
         }
+        }
 
     default:
-        print("WRONG INPUT")
+        print("WRONG INPUT PLEASE ENTER 1 OR 2")
 }
 }
 }
