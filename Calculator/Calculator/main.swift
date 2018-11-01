@@ -9,11 +9,6 @@
 import Foundation
 
 var appLoop: Bool = true
-var mainMenuLoop: Bool = true
-
-var basicCalc: Bool = false
-var highOrderCalcLoop: Bool = false
-var keepAskingLoop: Bool = false
 
 print("Thanks for using SmartCalc 2.0.\n")
 
@@ -46,7 +41,7 @@ while appLoop {
             case "yes", "1":
                 mainMenu()
             case "no", "2":
-                print("Thanks for using SmartCalc 2.0. Please give us a 5-Star ⭐️⭐️⭐️⭐️⭐️ rating at the App Store.\n")
+                print("Thanks for using SmartCalc 2.0. Please give us a 5-Star ⭐️⭐️⭐️⭐️⭐️ rating on the App Store.\n")
                 appLoop = false
             default:
                 print("Invalid input. Try again.\n")
@@ -57,7 +52,7 @@ while appLoop {
     }
     
     func regularCalc() {
-        print("Enter your operation in this format: 5 + 3 \nYou can choose +,-,*,/, or ? for the operation.\n")
+        print("Enter your operation in this format: 5 + 3 \nYou can choose +, -, *, /, or ? for the operation.\n")
         let userInput = readLine()
         if let safeUserInput = userInput {
             var userInputArray: [String] = safeUserInput.components(separatedBy: " ")
@@ -126,7 +121,7 @@ while appLoop {
                         print("Correct!")
                     } else if randomIntOperationGenerator == 2 && userGuessOperator == "*" {
                         print("Correct!")
-                    } else if randomIntOperationGenerator == 1 && userGuessOperator == "1" {
+                    } else if randomIntOperationGenerator == 3 && userGuessOperator == "/" {
                         print("Correct!")
                     } else {
                         print("Incorrect Answer. Try Again.\n")
@@ -159,10 +154,7 @@ while appLoop {
         var mappedArr: [Int] = []
         var reducedNum: Int = 0
         
-        
         print("Enter your operation, array of numbers, and condition. Example: \nfilter 1,2,3,4,5 by < 3\nmap 2,4,6,8,10 by * 2 (choose operation: +, -, *, /)\nreduce 3,6,9,12 by + 3 (choose +, * a starting number)\n")
-        
-    
         
         func filter() {
             
@@ -175,7 +167,6 @@ while appLoop {
                 }
                 return returnArr
             }
-            
             
             switch userCondition {
             case ">":
@@ -202,10 +193,7 @@ while appLoop {
                 highOrderCalc()
             }
             print("Your resulting filtered numbers: \(filteredArr)\n")
-        } // this part is done
-        
-        
-        
+        }
         
         
         func map() {
@@ -242,12 +230,7 @@ while appLoop {
             print("Your resulting mapped numbers: \(mappedArr)\n")
         }
         
-        
-        
-        
-        
-        
-        
+
         func reduce() {
             
             switch userCondition {
@@ -276,10 +259,6 @@ while appLoop {
             }
             print("Your resulting reduced number: \(reducedNum)\n")
         }
-        
-        
-        
-        
         
         
         if let userInput = readLine() {
@@ -332,7 +311,7 @@ while appLoop {
             } else if userInputArr[0] == "reduce" && (userInputArr[3] == "*" || userInputArr[3] == "+") {
                 reduce()
             } else {
-                print("Invalid Input. Please check your spelling. Try Again.\n")
+                print("Invalid Input. Please check your format. Try Again.\n")
                 sleep(1)
                 highOrderCalc()
             }
@@ -343,8 +322,3 @@ while appLoop {
     }
     
 }
-
-    
-
-
-
