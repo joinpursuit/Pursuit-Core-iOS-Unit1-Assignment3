@@ -10,8 +10,8 @@ import Foundation
 
 
 
-func myFilter(inputArray: [Int], filter: (Int) -> Bool) -> [Int] {
-    var resultArray = [Int]()
+func myFilter(inputArray: [Double], filter: (Double) -> Bool) -> [Double] {
+    var resultArray = [Double]()
     
     for num in inputArray{
         if filter(num){
@@ -21,15 +21,15 @@ func myFilter(inputArray: [Int], filter: (Int) -> Bool) -> [Int] {
     return resultArray
 }
 
-func myMap(arrayOfNums: [Int], mapClosure: (Int) -> Int) -> [Int]{
-    var emptyBox = [Int]()
+func myMap(arrayOfNums: [Double], mapClosure: (Double) -> Double) -> [Double]{
+    var emptyBox = [Double]()
     for num in arrayOfNums{
         emptyBox.append(mapClosure(num))
     }
     return emptyBox
 }
 
-func myReduce(arrOfNum: [Int], user: Int, reduceClosure: (Int, Int) -> Int) -> Int{
+func myReduce(arrOfNum: [Double], user: Double, reduceClosure: (Double, Double) -> Double) -> Double{
     var tempResult = user
     for num in arrOfNum{
         tempResult = reduceClosure(tempResult, num)
@@ -68,13 +68,13 @@ let regularOperationMessage = "Enter your regular operation: [e.g. 5 + 5] or [e.
 
 let higherOperationMessage = """
 Enter your high order operation like this:
-- filter 1,2,1,3,6,2,3,8 by < 4
+ filter 1,2,1,3,6,2,3,8 by < 4
     (You can filter by < or >)
 
-- map 1,5,2,7,3,4 by * 3
+ map 1,5,2,7,3,4 by * 3
     (You can map by * or /)
 
-- reduce 1,5,2,7,3,4 by + 4
+ reduce 1,5,2,7,3,4 by + 4
     (You can map by * or +)
 """
 
@@ -94,7 +94,7 @@ var control = true
 var letUsCalculate = true
 var newValidOperation = true
 var componentOfOperation = [String]()
-var whatTypeOfOperationInt = 0
+var whatTypeOfOperationInt = 0.0
 
 let arrayOfOperatorForRandom = ["+","-","/","*"]
 var randomOperator = " "
@@ -105,15 +105,20 @@ var userHigherOperation = " "
 while letUsCalculate {
     
     while control{
+        
         print(mainPromptMessage)
         let whatTypeOfOperation = readLine()?.lowercased() ?? "Invalid"
-        whatTypeOfOperationInt = Int(whatTypeOfOperation) ?? 0
-        
-        if whatTypeOfOperationInt == 1{
+        whatTypeOfOperationInt = Double(whatTypeOfOperation) ?? 0.0
+    
+        if whatTypeOfOperationInt == 1.0 {
             print(regularOperationMessage)
             let userRegOperation = readLine() ?? "Not a value"
             componentOfOperation = userRegOperation.components(separatedBy: " ")
-            if componentOfOperation.count == 3{
+            if Double(componentOfOperation.count) == 3.0 {
+                print("Calculating...")
+                
+                sleep(1)
+                
                 enterRegularOperation = true
                 enterHigherOrderOperation = false
                 control = false
@@ -127,6 +132,9 @@ while letUsCalculate {
             componentOfOperation = userHigherOperation.components(separatedBy: " ")
             if componentOfOperation.count == 5{
                 print("Calculating...")
+                
+                sleep(1)
+                
                 enterHigherOrderOperation = true
                 enterRegularOperation = false
                 control = false
@@ -160,7 +168,7 @@ while letUsCalculate {
                 print("Invalid operation")
                 break}
             
-            print(userHigherOperation)
+//            print(userHigherOperation)
             let x = (mathStuffFactory(opString: randomOperator)(num1, num2))
             print(x)
             print("Guess the operator used in the operation: [+, - , / , *]")
@@ -193,7 +201,7 @@ while letUsCalculate {
             }
             
             guard componentOfOperation[1] != "/" || num2 != 0 else {
-                print("Invalid operation.")
+                print("Invalid operation. Can't divide by zero. Please try again.")
                 control = true
                 enterRegularOperation =  false
                 break
@@ -208,9 +216,9 @@ while letUsCalculate {
     }
     
     while enterHigherOrderOperation{
-        let arrayOfNums = componentOfOperation[1].components(separatedBy: ",").compactMap{Int($0)}
+        let arrayOfNums = componentOfOperation[1].components(separatedBy: ",").compactMap{Double($0)}
         let operatorForHigherOrder = componentOfOperation[3]
-        let numOperatorBy = Int(componentOfOperation[componentOfOperation.endIndex-1]) ?? 0
+        let numOperatorBy = Double(componentOfOperation[componentOfOperation.endIndex-1]) ?? 0
         
         switch componentOfOperation[0]{
         case "filter":
@@ -252,6 +260,9 @@ while letUsCalculate {
     
     
     while newValidOperation{
+        
+        sleep(1)
+        
         print("If you need to calculate another thing, type: \"yes\" or \"no\"")
         let nextOperation = readLine()?.lowercased() ?? "not a value"
         switch nextOperation{
