@@ -35,16 +35,11 @@ func calculationFromString(strNum1: String, strNum2: String, instruction: (Doubl
     return instruction(strNum1Unwrap, strNum2Unwrap)
 }
 
-func customMap(_ arr: [Int], _ instruction: (Int) -> Int) -> [Int] {
-    var output = [Int]()
-    for num in arr {
-        output.append(instruction(num))
-    }
-    return output
-}
 
-func customFilter(_ arr: [Int], _ filter: (Int) -> Bool) -> [Int] {
-    var output = [Int]()
+
+
+func customFilter(arr: [Double], filter: (Double) -> Bool) -> [Double] {
+    var output = [Double]()
     for num in arr {
         if filter(num) {
             output.append(num)
@@ -53,12 +48,35 @@ func customFilter(_ arr: [Int], _ filter: (Int) -> Bool) -> [Int] {
     return output
 }
 
-func customReduce(_ arr: [Int], _ initial: Int, _ reduce: (Int, Int) -> Int) -> Int {
+let greaterThanNum = { (arrNum: Double, comparingNum: Double) -> Bool in
+    return arrNum > comparingNum
+}
+
+let lessThanNum = { (arrNum: Double, comparingNum: Double) -> Bool in
+    return arrNum < comparingNum
+}
+
+
+
+func customMap(arr: [Double], instruction: (Double) -> Double) -> [Double] {
+    var output = [Double]()
+    for num in arr {
+        output.append(instruction(num))
+    }
+    return output
+}
+
+//customMapMathFactory
+
+
+
+func customReduce( arr: [Double], initial: Double, reduce: (Double, Double) -> Double) -> Double {
     var currentValue = initial
-    var nextValue = 0
+    var nextValue = 0.0
     for num in arr {
         nextValue = num
         currentValue = reduce(currentValue, nextValue)
     }
     return currentValue
 }
+
