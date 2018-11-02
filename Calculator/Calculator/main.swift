@@ -50,7 +50,7 @@ func myReduce(arr: [Int], closure: (Int,Int) -> Int, given: Int ) -> Int {
 }
 
 var operatorsArr = ["+", "-", "/", "*", "?"]     //? means its just a space ? is what the operator would be, but the user won't see it
-var higherFuncs = ["map", "fiter", "reduce"]     // this is a global array
+var higherFuncs = ["map", "filter", "reduce"]     // this is a global array
 var newArrforHigherfuncs = ["+", "*", "/", "<", ">"]  // this is a new array for the higher order func part, if we just added all this in operatorsArr it would break our code
 
 var usingCalculator = true
@@ -130,7 +130,6 @@ while usingCalculator {
         }
     case "2":
         print("choose a high order function e.g filter 1,5,2,7,3,4 by < 4")
-        let userInput = readLine ()
         guard let userInputunwrapped = readLine() else {
             continue
         }
@@ -139,11 +138,11 @@ while usingCalculator {
             print("Please enter as shown in example.")
             continue
         }
-        guard highFuncArray.contains(highFuncArray[0]) else {
+        guard higherFuncs.contains(highFuncArray[0]) else {
             print("That's not right, try again.")
             continue
         }
-        let numArrayOfstrings = userInputunwrapped.components(separatedBy: ",")
+        let numArrayOfstrings = highFuncArray[1].components(separatedBy: ",")
         var arrayOfints = [Int]()
         for number in numArrayOfstrings {
             if let num = Int(number) {
@@ -162,8 +161,8 @@ while usingCalculator {
             print("Enter a valid number.")
             continue
         }
-        var userOperator = highFuncArray[3]
-        var higherOrderword = highFuncArray[0]
+        let userOperator = highFuncArray[3]
+        let higherOrderword = highFuncArray[0]
         switch higherOrderword {
         case "filter":                               // myFilter(arr:[Int], closure: (Int) -> Bool) -> [Int]
             if userOperator == "<" {
