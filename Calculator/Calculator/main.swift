@@ -7,7 +7,8 @@
 //
 
 import Foundation
-import Foundation
+
+
 var theOperator = String()
 var magicOperator = Bool()
 var randomOperatorArray = ["+","-","/","*"]
@@ -25,6 +26,9 @@ var userChosenNumber = String()
 var computationalOperator  = String()
 var userChosenNumber1 = Int()
 var start = Int()
+
+
+
 func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
     switch opString {
     case "+":
@@ -58,7 +62,6 @@ var myClosure = { (closure: Int) -> Bool in
         return false
     }
 }
-
 // my map func
 func myMapFunction(inputArray: [Int] , myClosure: (Int) -> Int) -> [Int] {
     var returnedArray = [Int]()
@@ -68,17 +71,13 @@ func myMapFunction(inputArray: [Int] , myClosure: (Int) -> Int) -> [Int] {
     }
     return returnedArray
 }
-
-
 // MY mapclosure
 var myMapClosure = {(closure:Int)-> Int in
     let result = closure * userChosenNumber1
     
     return result
 }
-
 // reduceFunction
-
 func myReduceFunction(inputArray:[Int] , myClosure: (Int,Int) -> Int , start: Int ) -> Int {
     var currentTotal = start
     for element in inputArray{
@@ -91,7 +90,6 @@ var myClosureReduced = { (currentTotal:Int,element:Int) -> Int in
     let sum = currentTotal + element
     return sum
 }
-
 func operatorCheck() -> Bool {
     if theOperator == "?" {
         theOperator = randomOperatorArray.randomElement() ?? "You tried it!!"
@@ -101,8 +99,9 @@ func operatorCheck() -> Bool {
     return magicOperator
 }
 
-func question() {
-    print("What opoerator was used?")
+func question(theOperator: String) {
+    if theOperator == "?" {
+    print("What operator was used?")
     if let response = readLine(){
         if response == theOperator{
             print("That is correct.. WooHoo!!")
@@ -112,9 +111,10 @@ func question() {
         }
     }
 }
-
+}
 
 calculatorOnLoop: while calculatorOn {
+    
     print("Welcome to a magic calculator, the ability of this calculator depends on your imagination what wouldn you like to try first?, simple or higher order ?")
     guard let userPath = readLine() else {continue calculatorOnLoop}
     guard pathArray.contains(userPath) else {continue calculatorOnLoop}
@@ -131,23 +131,34 @@ calculatorOnLoop: while calculatorOn {
         double2 = double2unwrapped
         
         theOperator.append(userInputArray[1])
-        if theOperator == "?" {
+       
+        if theOperator == "?"{
             theOperator = randomOperatorArray.randomElement() ?? "You tried it"
-            
+            let mathFunction = mathStuffFactory(opString: theOperator)
+            let answer1 = mathFunction(double1,double2)
+            print(answer1)
+            print("what operator was used?")
+            if let userResponse = readLine(){
+                if userResponse == theOperator {
+                    print("Congrats you got it right")
+                }else{
+                    print("Incorrect")
+                }
+            }
         }
+        if theOperator != "?"{
         let mathFunction = mathStuffFactory(opString: theOperator)
         let answer = mathFunction(double1,double2)
-        print(answer)
-        if theOperator == "?" {
-            question()}
+        print("\(double1) \(theOperator) \(double2) = \(answer)")
         theOperator.removeAll()
+        }
         
     case "higher order":
         
         print("Please enter your operation")
         guard let userInput = readLine() else {continue calculatorOnLoop}
         var userInputArray = userInput.components(separatedBy: " ")
-        print(userInputArray)
+        guard userInputArray.count > 3 else {continue calculatorOnLoop}
         userinputString.append(userInputArray[0])
         userInputNumberString.append(userInputArray[1])
         computationalOperator.append(userInputArray[3])
@@ -161,11 +172,6 @@ calculatorOnLoop: while calculatorOn {
                 print("Please enter valid numbers")
                 continue calculatorOnLoop
             }
-            print(userInputNumbersArray)
-            print(userinputString)
-            print(userInputNumberString)
-            print(computationalOperator)
-            print(userChosenNumber)
         }
         switch userinputString {
         case "filter":
@@ -179,7 +185,7 @@ calculatorOnLoop: while calculatorOn {
                     }
                 }
                 let call = filterFunction(inputArray: userInputNumbersArray, closure: myClosure)
-                print(call)
+                print("the result is \(call)")
             case "<":
                 myClosure = { (closure: Int) -> Bool in
                     if closure < userChosenNumber1 {
@@ -189,8 +195,7 @@ calculatorOnLoop: while calculatorOn {
                     }
                 }
                 let call = filterFunction(inputArray: userInputNumbersArray, closure: myClosure)
-                print(call)
-                
+               print("the result is \(call)")
             default:
                 print("INVALID")
             }
@@ -204,7 +209,7 @@ calculatorOnLoop: while calculatorOn {
                     return sum
                 }
                 let call = myReduceFunction(inputArray: userInputNumbersArray, myClosure: myClosureReduced, start: start)
-                print(call)
+                print("the result is \(call)")
             case "+":
                 start = 0
                 myClosureReduced = { (currentTotal:Int,element:Int) -> Int in
@@ -212,7 +217,7 @@ calculatorOnLoop: while calculatorOn {
                     return sum
                 }
                 let call = myReduceFunction(inputArray: userInputNumbersArray, myClosure: myClosureReduced, start: start)
-                print(call)
+                print("the result is \(call)")
             default:
                 print("INVALID")
             }
@@ -225,14 +230,14 @@ calculatorOnLoop: while calculatorOn {
                     return result
                 }
                 let call = myMapFunction(inputArray: userInputNumbersArray, myClosure: myMapClosure)
-                print(call)
+               print("the result is \(call)")
             case "/":
                 myMapClosure = {(closure:Int)-> Int in
                     let result = closure / userChosenNumber1
                     return result
                 }
                 let call = myMapFunction(inputArray: userInputNumbersArray, myClosure: myMapClosure)
-                print(call)
+                print("the result is \(call)")
             default:
                 print("INVALID")
             }
