@@ -67,7 +67,7 @@ while power == "on" {
             
             //check if the operator is valid
             guard (operators + ["?"]).contains(userOperator) else {
-                print("Invalid Operator, please enter only one of these operators: \"+\", \"-\", \"*\", \"/\", & \"?\".")
+                print("Invalid Operator 😕, please enter only one of these operators: \"+\", \"-\", \"*\", \"/\", & \"?\".")
                 continue
             }
             
@@ -129,7 +129,7 @@ while power == "on" {
             print("my breakdown is \(userInputBreakdown)")
             
             guard userInputBreakdown.count == 5 else {
-                print("Incorrect Format.\nPlease enter in this format (please take note of the spaces): [higherOrderKeyWord Numbers by operator givenValue]")
+                print("Incorrect Spacing 😯.\nPlease enter in this format (please take note of the spaces): [higherOrderKeyWord Numbers by operator givenValue]")
                 print("Correct Input: filter 1,5,2,7,3,4 by < 4 \nIncorrect Input: by1,5,2,7,3,4filter<4")
                 continue
             }
@@ -146,7 +146,7 @@ while power == "on" {
             }
             //check if the numbers in arrNumsStr are numbers
             guard checkStrNumsInArr(arr: arrNumsStr) else {
-                print("Make sure that all the numbers in your list of numbers are numbers. Please try again")
+                print("Make sure that all the numbers in your list of numbers are numbers. Please try again 🙂.")
                 print("Correct Input: 1,5,6,23,100")
                 print("Incorrect Input: 1,5,r,23,100b")
                 continue
@@ -215,7 +215,7 @@ while power == "on" {
             
             
         case "3":
-            print("Turning off...")
+            print("\nTurning off...")
             sleep(1)
             print("Bye ✌🏾!")
             power = "off"
