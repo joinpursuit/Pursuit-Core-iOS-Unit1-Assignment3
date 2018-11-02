@@ -14,7 +14,6 @@ print("This is “JT Calculator”, the most Advanced and Fun Calculator in the 
 var power = "on"
 let invalidInput = true
 let operators = ["+", "-", "*", "/"]
-let comparingOperators = [">", "<"]     //additional feature == / !=
 
 while power == "on" {
     sleep(1)
@@ -34,6 +33,7 @@ while power == "on" {
   
     inCalculation: while invalidInput {
         switch userChoice {
+        
         case "1":   /*****Basic Calculator*****/
             print("\nPlease enter your operation, e.g., 3 + 2\n")
         
@@ -83,6 +83,7 @@ while power == "on" {
                 
                 let gameCalculationFunc = mathStuffFactory(opString: randomOperator)
                 let result = calculationFromString(strNum1: userOperants.num1, strNum2: userOperants.num2, instruction: gameCalculationFunc)
+                
                 print("\(userOperants.num1) ? \(userOperants.num2) = \(result)")
                 
                 while invalidInput {
@@ -111,40 +112,107 @@ while power == "on" {
             print("\(userOperants.num1) \(userOperator) \(userOperants.num2) = \(result)")
             break inCalculation
             
-        case "2":   /*****Higher-Order Calculator*****/
-            print("Please enter your operation (map, filter, or reduce).")
-            print("e.g.,    Input: map 1,2,3,4,5 by * 2    Output: 2,4,6,8,10")
-            //user Input
-            //break input into parts
-                //["filter", "1,2,3,4,5", "by", "<", "4"]
             
-            //store type of higherorder
-            //store numbers into an array
-            //store operator
-            //store given value
+        case "2":   /*****Higher-Order Calculator*****/
+            sleep(1)
+            print("\nPlease enter your operation (map, filter, or reduce).")
+            print("e.g.,    Input: map 1,2,3,4,5 by * 2    Output: 2, 4, 6, 8, 10\n")
+            //user Input
+            let userInputOptional = readLine()?.lowercased()
+            guard let userInput = userInputOptional else {
+                print("Did you enter anything? Please try again.")
+                continue
+            }
+            
+            let userInputBreakdown = userInput.components(separatedBy: " ")
+            sleep(1)
+            print("my breakdown is \(userInputBreakdown)")
+            
+            guard userInputBreakdown.count == 5 else {
+                print("Incorrect Format.\nPlease enter in this format (please take note of the spaces): [higherOrderKeyWord Numbers by operator givenValue]")
+                print("Correct Input: filter 1,5,2,7,3,4 by < 4 \nIncorrect Input: by1,5,2,7,3,4filter<4")
+                continue
+            }
+            
+            let higherOrderKeyword = userInputBreakdown[0]
+            let arrNumsStr = userInputBreakdown[1].components(separatedBy: ",")
+            let userOperator = userInputBreakdown[3]
+            let givenValueStr = userInputBreakdown[4]
             
             //check if given value is a num
-            //check if arr are nums, if so convert them to Doubles using compactMap
+            guard let givenValue = Double(givenValueStr) else {
+                print("Your given value is not a number.")
+                continue
+            }
+            //check if the numbers in arrNumsStr are numbers
+            guard checkStrNumsInArr(arr: arrNumsStr) else {
+                print("Make sure that all the numbers in your list of numbers are numbers. Please try again")
+                print("Correct Input: 1,5,6,23,100")
+                print("Incorrect Input: 1,5,r,23,100b")
+                continue
+            }
+            
+            //convert arrNumsStr to Doubles
+            let arrNums: [Double] = arrNumsStr.compactMap({ strNum in Double(strNum)})
             
             //variable for output
-            //depending on the type of higher order function, we do different things (check higher order words)
-                //filter
-                    //check operators (comparing)
-                    //invoke filter function, use precreate closure, and store the new array in output
-                    //print output
-                //map
-                    //check operators (regular)
-                    //build a func that returns func.  func (givenValue: num) {depends on operator (switch) return num in num *+-/ givenValue}
-                    //invoke the new mathFactory and store in calculationFunc
-                    //invoke map use precreated closure and store the new array in the ouput
-                    //print output
-                //reduce
-                    //check operators (regular)
-                    //given value is the initial
-                    //based on the operator invoke the mathfactory function and store in calculationFunc variable
-                    //invoke reduce and store output as 1 single Double
-                    //print answer
+            switch higherOrderKeyword {
+            
+            case "map":
+                guard operators.contains(userOperator) else {
+                    print("Invalid operator. Please enter one of the following:")
+                    print("[\"+\", \"-\", \"*\", \"/\"]\n")
+                    continue
+                }
+                //invoke the new mathFactory and store in calculationFunc
+                let calculationFuncClosure = customMapMathFactory(operatorStr: userOperator, givenValue: givenValue)
+                //invoke map use precreated closure and store the new array in the ouput
+                let result = customMap(arr: arrNums, instruction: calculationFuncClosure)
+                //print output
+                let output = result.compactMap({numDouble in String(numDouble)})
+                                    .joined(separator: ", ")
+                print("Output: \(output)")
+                
+                
+            case "filter":
+                let comparingOperators = [">", "<"]     //additional feature == / != (if time permits)
+                //check operators (comparing)
+                guard comparingOperators.contains(userOperator) else {
+                    print("Invalid operator. Please enter either \">\" or \"<\".")
+                    continue
+                }
+                //invoke filter function, use precreate closure, and store the new array in output
+                var result = [Double]()
+                if userOperator == ">" {
+                    result = customFilter(arr: arrNums, givenValue: givenValue, filter: greaterThanNum)
+                } else if userOperator == "<" {
+                    result = customFilter(arr: arrNums, givenValue: givenValue, filter: lessThanNum)
+                }
+                
+                let output = result.compactMap({numDouble in String(numDouble)})
+                                    .joined(separator: ", ")
+                print("Output: \(output)")
+                
+                
+            case "reduce":
+                guard operators.contains(userOperator) else {
+                    print("Invalid operator. Please enter one of the following:")
+                    print("[\"+\", \"-\", \"*\", \"/\"]\n")
+                    continue
+                }
+                let reduceClosure = mathStuffFactory(opString: userOperator)
+                let result = customReduce(arr: arrNums, initial: givenValue, reduce: reduceClosure)
+                let output = result
+                print("Output: \(output)")
+
+
+            default:
+                print("Please only enter \"map\", \"filter\", or \"reduce\" for the higherOrderKeyword.")
+                continue
+            }
+            
             break inCalculation
+            
             
         case "3":
             print("Turning off...")
@@ -152,6 +220,7 @@ while power == "on" {
             print("Bye ✌🏾!")
             power = "off"
             break inCalculation
+            
         default:
             break inCalculation
         }

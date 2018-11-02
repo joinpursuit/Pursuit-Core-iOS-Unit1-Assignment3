@@ -8,6 +8,7 @@
 
 import Foundation
 
+//part1 functions
 func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
     switch opString {
     case "+":
@@ -21,7 +22,7 @@ func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
     default:
         return {x, y in x + y }
     }
-}
+}   //this one is also used in part2
 
 func numsCheckFromString(num1: String, num2: String) -> Bool {
     if let _ = Int(num1), let _ = Int(num2) {
@@ -37,11 +38,11 @@ func calculationFromString(strNum1: String, strNum2: String, instruction: (Doubl
 
 
 
-
-func customFilter(arr: [Double], filter: (Double) -> Bool) -> [Double] {
+//part2 functions
+func customFilter(arr: [Double], givenValue: Double, filter: (Double, Double) -> Bool) -> [Double] {
     var output = [Double]()
     for num in arr {
-        if filter(num) {
+        if filter(num, givenValue) {
             output.append(num)
         }
     }
@@ -66,7 +67,20 @@ func customMap(arr: [Double], instruction: (Double) -> Double) -> [Double] {
     return output
 }
 
-//customMapMathFactory
+func customMapMathFactory(operatorStr: String, givenValue: Double) -> (Double) -> Double {
+    switch operatorStr {
+    case "+":
+        return { (arrNum: Double) -> Double in return arrNum + givenValue}
+    case "-":
+        return { (arrNum: Double) -> Double in return arrNum - givenValue}
+    case "*":
+        return { (arrNum: Double) -> Double in return arrNum * givenValue}
+    case "/":
+        return { (arrNum: Double) -> Double in return arrNum / givenValue}
+    default:
+        return { (arrNum: Double) -> Double in return arrNum + givenValue}
+    }
+}
 
 
 
@@ -80,3 +94,15 @@ func customReduce( arr: [Double], initial: Double, reduce: (Double, Double) -> D
     return currentValue
 }
 
+
+
+func checkStrNumsInArr(arr: [String]) -> Bool {
+    for strNum in arr {
+        if let _ = Double(strNum) {
+            continue
+        } else {
+            return false
+        }
+    }
+    return true
+}
