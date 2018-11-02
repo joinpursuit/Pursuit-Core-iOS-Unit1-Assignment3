@@ -12,7 +12,7 @@ import Foundation
 var theOperator = String()
 var magicOperator = Bool()
 var randomOperatorArray = ["+","-","/","*"]
-var calculatorOn = true
+var calculatorOn =  true
 var keyword = String()
 var pathArray = ["simple" , "higher order"]
 var keywordArray = ["filter" , "map", "reduce"]
@@ -112,13 +112,20 @@ func question(theOperator: String) {
     }
 }
 }
+func playAgain() {
+print("would you like you calculate again?")
+    let userResponse = readLine() ?? "Invalid"
+    if userResponse.lowercased() == "yes"{
+        calculatorOn = true
+    }else if userResponse.lowercased() == "no"{
+        calculatorOn = false
+    }
+}
 
 calculatorOnLoop: while calculatorOn {
-    
     print("Welcome to a magic calculator, the ability of this calculator depends on your imagination what wouldn you like to try first?, simple or higher order ?")
     guard let userPath = readLine() else {continue calculatorOnLoop}
     guard pathArray.contains(userPath) else {continue calculatorOnLoop}
-    
     switch userPath {
     case "simple":
         print("please enter your operation..")
@@ -152,13 +159,13 @@ calculatorOnLoop: while calculatorOn {
         print("\(double1) \(theOperator) \(double2) = \(answer)")
         theOperator.removeAll()
         }
-        
+        playAgain()
     case "higher order":
         
         print("Please enter your operation")
         guard let userInput = readLine() else {continue calculatorOnLoop}
         var userInputArray = userInput.components(separatedBy: " ")
-        guard userInputArray.count > 3 else {continue calculatorOnLoop}
+        guard userInputArray.count > 3  else {continue calculatorOnLoop}
         userinputString.append(userInputArray[0])
         userInputNumberString.append(userInputArray[1])
         computationalOperator.append(userInputArray[3])
@@ -186,6 +193,7 @@ calculatorOnLoop: while calculatorOn {
                 }
                 let call = filterFunction(inputArray: userInputNumbersArray, closure: myClosure)
                 print("the result is \(call)")
+                playAgain()
             case "<":
                 myClosure = { (closure: Int) -> Bool in
                     if closure < userChosenNumber1 {
@@ -196,8 +204,10 @@ calculatorOnLoop: while calculatorOn {
                 }
                 let call = filterFunction(inputArray: userInputNumbersArray, closure: myClosure)
                print("the result is \(call)")
+              playAgain()
             default:
                 print("INVALID")
+                continue calculatorOnLoop
             }
             
         case "reduce":
@@ -210,6 +220,7 @@ calculatorOnLoop: while calculatorOn {
                 }
                 let call = myReduceFunction(inputArray: userInputNumbersArray, myClosure: myClosureReduced, start: start)
                 print("the result is \(call)")
+                playAgain()
             case "+":
                 start = 0
                 myClosureReduced = { (currentTotal:Int,element:Int) -> Int in
@@ -218,8 +229,10 @@ calculatorOnLoop: while calculatorOn {
                 }
                 let call = myReduceFunction(inputArray: userInputNumbersArray, myClosure: myClosureReduced, start: start)
                 print("the result is \(call)")
+                playAgain()
             default:
                 print("INVALID")
+                continue calculatorOnLoop
             }
         case "map":
             switch computationalOperator{
@@ -231,6 +244,7 @@ calculatorOnLoop: while calculatorOn {
                 }
                 let call = myMapFunction(inputArray: userInputNumbersArray, myClosure: myMapClosure)
                print("the result is \(call)")
+               playAgain()
             case "/":
                 myMapClosure = {(closure:Int)-> Int in
                     let result = closure / userChosenNumber1
@@ -238,14 +252,19 @@ calculatorOnLoop: while calculatorOn {
                 }
                 let call = myMapFunction(inputArray: userInputNumbersArray, myClosure: myMapClosure)
                 print("the result is \(call)")
+                playAgain()
             default:
                 print("INVALID")
+                 continue calculatorOnLoop
             }
         default:
             print("INVALID")
+             continue calculatorOnLoop
         }
         
     default:
         print("INVALID")
+        continue calculatorOnLoop
     }
 }
+
