@@ -1,4 +1,4 @@
-## Unit 1 Assignment 3 - Command Line Calculator
+## Unit 1 Command Line Calculator
 
 ## Instructions for lab submission 
 
