@@ -129,22 +129,6 @@ Your reduce will need to support:
 >
 >26
 
-## Rubric
-
-| Criteria | | | | | Pts |
-|:-----:|:-------:|:--------:|:------:|:--------:|:-----------:|
-| Solve Problems with Functions | 4.0 pts Exceeds Expectations | 3.0 pts Meets Expectations | 2.0 pts Partially Meets Expectations | 1.0 pts Does Not Meet Expectations | 4.0 pts |
-| Define and Use Closures | 4.0 pts Exceeds Expectations | 3.0 pts Meets Expectations | 2.0 pts Partially Meets Expectations | 1.0 pts Does Not Meet Expectations | 4.0 pts |
-| Calculator can +,-,x,/ two numbers | 4.0 pts Exceeds Expectations | 3.0 pts Meets Expectations | 2.0 pts Partially Meets Expectations | 1.0 pts Does Not Meet Expectations | 4.0 pts |
-| Calculator handles bad input appropriately | 4.0 pts Exceeds Expectations | 3.0 pts Meets Expectations | 2.0 pts Partially Meets Expectations | 1.0 pts Does Not Meet Expectations | 4.0 pts |
-| ? Performs a random operation | 4.0 pts Exceeds Expectations | 3.0 pts Meets Expectations | 2.0 pts Partially Meets Expectations | 1.0 pts Does Not Meet Expectations | 4.0 pts |
-| Guessing game for ? operator functions appropriately | 4.0 pts Exceeds Expectations | 3.0 pts Meets Expectations | 2.0 pts Partially Meets Expectations | 1.0 pts Does Not Meet Expectations | 4.0 pts |
-| Custom filter works appropriately | 4.0 pts Exceeds Expectations | 3.0 pts Meets Expectations | 2.0 pts Partially Meets Expectations | 1.0 pts Does Not Meet Expectations | 4.0 pts |
-| Custom map works appropriately | 4.0 pts Exceeds Expectations | 3.0 pts Meets Expectations | 2.0 pts Partially Meets Expectations | 1.0 pts Does Not Meet Expectations | 4.0 pts |
-| Custom reduce works appropriately | 4.0 pts Exceeds Expectations | 3.0 pts Meets Expectations | 2.0 pts Partially Meets Expectations | 1.0 pts Does Not Meet Expectations | 4.0 pts |
-| General Coding Logic | 4.0 pts Exceeds Expectations | 3.0 pts Meets Expectations | 2.0 pts Partially Meets Expectations | 1.0 pts Does Not Meet Expectations | 4.0 pts|
-
-Total Points 40.0
 
 </br>
 
