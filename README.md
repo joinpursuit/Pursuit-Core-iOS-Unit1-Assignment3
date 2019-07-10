@@ -32,7 +32,7 @@ func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
 
 ### Part 1a: Command Line Math Stuff
 
-Incorporate mathStuffFactory(_:) that we worked on in Closures Two into a command line application. Parse input from the user into operator, and two operands, run the operation and return the answer. Reject non-conforming ops with a message.
+Incorporate mathStuffFactory(_:) into a command line application. Parse input from the user into operator, and two operands, run the operation and return the answer. Reject non-conforming ops with a message.
 
 For example, your console might look like this:
 
