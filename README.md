@@ -11,28 +11,18 @@
 
 ## Question One
 
-Exhibit A. (mathStuffFactory)
+Exhibit A. (operations dictionary)
 
 ```swift
-func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
-    switch opString {
-    case "+":
-        return {x, y in x + y }
-    case "-":
-        return {x, y in x - y }
-    case "*":
-        return {x, y in x * y }
-    case "/":
-        return {x, y in x / y }
-    default:
-        return {x, y in x + y }
-    }
-}
+var operations: ([String: (Double, Double) -> Double]) = ["+": { $0 + $1 },
+                                                          "-": { $0 - $1 },
+                                                          "*": { $0 * $1 },
+                                                          "/": { $0 / $1 }]
 ```
 
 ### Part 1a: Command Line Math Stuff
 
-Incorporate mathStuffFactory(_:) into a command line application. Parse input from the user into operator, and two operands, run the operation and return the answer. Reject non-conforming ops with a message.
+Incorporate `operations` into a command line application. Parse input from the user into operator, and two operands, run the operation and return the answer. Reject non-conforming ops with a message.
 
 For example, your console might look like this:
 
