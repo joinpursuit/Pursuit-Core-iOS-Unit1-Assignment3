@@ -11,7 +11,7 @@ import Foundation
 func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
   switch opString {
   case "+":
-    return {x, y in x + y }
+    return {x, y in x + y } //shorthand closure syntax
   case "-":
     return {x, y in x - y }
   case "*":
@@ -22,3 +22,10 @@ func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
     return {x, y in x + y }
   }
 }
+
+let closureOperation = mathStuffFactory(opString: "+") // operation is a closure that takes in 2 doubles and returns a double.
+let result = closureOperation(45, 5)
+
+print("result of operation is \(result)")
+
+
