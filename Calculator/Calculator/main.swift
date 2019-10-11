@@ -8,10 +8,10 @@
 
 import Foundation
 
-func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
+func mathStuffFactory(opString: String) -> (Double, Double) -> Double {      // closure
   switch opString {
   case "+":
-    return {x, y in x + y }
+    return {x, y in x + y }     // shorthand syntax
   case "-":
     return {x, y in x - y }
   case "*":
@@ -22,3 +22,8 @@ func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
     return {x, y in x + y }
   }
 }
+
+let operationClosure = mathStuffFactory(opString: "+")
+let result = operationClosure(45, 5)
+print(result)
+
