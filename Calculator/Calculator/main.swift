@@ -9,7 +9,7 @@
 import Foundation
 
 var stop = false
-var calculationList = ["+", "-", "*", "/"]
+let calculationList: Set<String> = ["+", "-", "*", "/"]
 
 func space() {
     for _ in 0...50 {
@@ -34,7 +34,7 @@ func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
 
 func myFilter(inputArray: [Int], filter: Int, filterType: String) -> [Int] {
     var filteredArray: [Int] = []
-    print(filterType)
+    
     for num in inputArray {
         if num < filter && "<" == filterType {
             filteredArray.append(num)
@@ -45,53 +45,113 @@ func myFilter(inputArray: [Int], filter: Int, filterType: String) -> [Int] {
     return filteredArray
 }
 
+func myMaps(inputArray numList: [Int], inputInt mulBy: Int) -> [Int] {
+    var result = [Int]()
+    
+    for num in numList {
+        result.append(num * mulBy)
+    }
+    
+    return result
+}
+
+func myReduce(inputArray: [Int], startingNumber: Int, reduceType: String) -> Int {
+    var result = Int()
+    let inputType = ["-", "+"]
+    result = startingNumber
+    
+    if reduceType == inputType[0] {
+        for num in inputArray {
+            result -= num
+        }
+    } else if reduceType == inputType[1] {
+        for num in inputArray {
+            result += num
+        }
+    }
+    
+    return result
+}
+
 while stop == false {
     space()
     print("enter the 2 number and the calculation type you want to do")
     let userInput = readLine() ?? "0"
     var calculator = ""
     var calculatorNum: [Double] = []
-    var filterNum: [Int] = []
-    var filterBy = Int()
-    var filter = ""
-    let splitInput1 = userInput.split(separator: " ", maxSplits: 1000000000)
+    var numberList: [Int] = []
+    var inputNumber = Int()
+    var filterType = ""
+    var reduceType = ""
+    let splitInput1 = userInput.split(separator: " ")
+    let wordCheck = splitInput1[0]
     
-    if splitInput1.contains("filter") {
-        filterBy = Int(splitInput1[splitInput1.count - 1]) ?? 0
-        for element in splitInput1 {
-            if element != splitInput1[splitInput1.count - 1] {
-                let processingOfFilter = element.split(separator: ",")
-                for value in processingOfFilter {
-                    if Int(value) != nil {
-                        filterNum.append(Int(value)!)
-                    } else if (value == "<" || value == ">") {
-                        filter = String(value)
-                    }
+    func stringSepration() {
+        inputNumber = Int(splitInput1[splitInput1.count - 1]) ?? 0
+        for element in splitInput1 where element != splitInput1[splitInput1.count - 1] {
+            let processingOfFilter = element.split(separator: ",")
+            for value in processingOfFilter {
+                if Int(value) != nil {
+                    numberList.append(Int(value)!)
+                } else if (value == "<" || value == ">") {
+                    filterType = String(value)
+                } else if (value == "+" || value == "-") {
+                    reduceType = String(value)
                 }
             }
         }
     }
-    for element in splitInput1 {
-        if Double(element) != nil {
-            calculatorNum.append(Double(element) ?? 0)
-        } else if calculationList.contains(String(element)) {
-            calculator.append(String(element))
-        } else if element == "?" {
-            calculator = calculationList.randomElement() ?? "+"
+    
+    func calculation() {
+        for element in splitInput1 {
+            if Double(element) != nil {
+                calculatorNum.append(Double(element) ?? 0)
+            } else if calculationList.contains(String(element)) {
+                calculator.append(String(element))
+            } else if element == "?" {
+                calculator = calculationList.randomElement() ?? "+"
+            }
         }
     }
     
-    if filter.count > 0 {
-        let result = myFilter(inputArray: filterNum, filter: filterBy, filterType: filter)
-        print("here is the filted list: \(result)")
-    } else if calculatorNum.count == 2 {
-        let calculationType = mathStuffFactory(opString: calculator)
-        let result = calculationType(calculatorNum[0], calculatorNum[1])
-        space()
-        print("the result of your calculation is \(result)")
-    } else {
-        space()
-        print("Not sure what you want to do...")
+    switch wordCheck {
+    case "filter":
+        stringSepration()
+        
+        if filterType.count > 0 {
+            let result = myFilter(inputArray: numberList, filter: inputNumber, filterType: filterType)
+            print("here is the filted list: \(result)")
+        } else {
+            print("I got into the filter")
+        }
+    case "reduce":
+        stringSepration()
+        if numberList.count != 0 && reduceType.count > 0 {
+            let result = myReduce(inputArray: numberList, startingNumber: inputNumber, reduceType: reduceType)
+            print("here is the filted list: \(result)")
+        } else {
+            print("I got into the reduce")
+        }
+    case "map":
+        stringSepration()
+        if numberList.count != 0 && inputNumber != 0 {
+            print(numberList)
+            let result = myMaps(inputArray: numberList, inputInt: inputNumber)
+            print("here is the filted list: \(result)")
+        } else {
+            print("I got into the map")
+        }
+    default:
+        calculation()
+        if calculatorNum.count == 2 {
+            let calculationType = mathStuffFactory(opString: calculator)
+            let result = calculationType(calculatorNum[0], calculatorNum[1])
+            space()
+            print("the result of your calculation is \(result)")
+        } else {
+            space()
+            print("Not sure what you want to do...")
+        }
     }
     
     print("if you want to do another calculation please enter 'yes'")
