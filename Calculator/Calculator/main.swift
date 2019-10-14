@@ -46,7 +46,7 @@ extension String {
 private let operationArray = ["+","-","/","*"]
 
 func mainMenu() {
-    print("Welcome, Enter 1 for basic math or 2 for higher order functions")
+    print("Welcome, Enter 1 for basic math or 2 for basic higher order functions")
     let mathOption = readLine()!
     switch mathOption {
     case "1" :
@@ -54,26 +54,27 @@ func mainMenu() {
     case "2":
         higherOrder()
     default:
-        print("Invalid, try again")
+        print("\nInvalid, try again\n")
         mainMenu()
     }
 }
 
 func doBasicMath() {
-    print("Enter a basic math operation ex. 5 + 7")
+    print("\nEnter a basic math operation ex. 5 + 7")
+    print("You can use +, -, /, *, ?")
+    print("ex. 4 ? 9.5 to guess the operation\n")
     let basicMath = readLine()!
     var basicMathArray = basicMath.components(separatedBy: " ")
-    print(basicMathArray)
     guard basicMathArray.count == 3 && basicMathArray[0].isDouble && basicMathArray[2].isDouble && (operationArray.contains(basicMathArray[1]) || basicMathArray[1] == "?") else {
-        print("Invalid, Try Again")
+        print("\nInvalid, Try Again\n")
         return doBasicMath()
     }
     
     if basicMathArray[1] == "?" {
         basicMathArray[1] = operationArray.randomElement()!
         let symbol = operations[basicMathArray[1]]!
-        print("\(basicMath) = \(symbol(Double(basicMathArray[0])!, Double(basicMathArray[2])!))")
-        print("Guess the missing operator!")
+        print("\n\(basicMath) = \(symbol(Double(basicMathArray[0])!, Double(basicMathArray[2])!))\n")
+        print("\nGuess the missing operator!\n")
         let guess = readLine()
         if guess == basicMathArray[1] {
             print("\nCorrect!\n")
@@ -83,24 +84,24 @@ func doBasicMath() {
         }
     } else {
         if let symbol = operations[basicMathArray[1]] {
-            print("\(basicMath) = \(symbol(Double(basicMathArray[0])!, Double(basicMathArray[2])!))")
+            print("\n\(basicMath) = \(symbol(Double(basicMathArray[0])!, Double(basicMathArray[2])!))\n")
             
         }
     }
 }
 
 func higherOrder() {
-    print("Options are map, filter or reduce. Example entry: map 1,2,3,4 * 4")
+    print("\nOptions are map, filter or reduce. Example entry: map 1,2,3,4 * 4")
     print("""
 map can only perform * or /
 filter can only perform < or >
-reduce can only perform + or *
+reduce can only perform + or * \n
 """)
-    let usersInput = readLine()!
+    let usersInput = readLine()!.lowercased()
     let usersInputArray = usersInput.components(separatedBy: " ")
     
     guard usersInputArray.count == 4 && (usersInputArray[0] == "map" || usersInputArray[0] == "filter" || usersInputArray[0] == "reduce") && usersInputArray[3].isDouble else {
-        print("Invalid, Try Again")
+        print("\nInvalid, Try Again\n")
         return higherOrder()
     }
     
@@ -115,6 +116,9 @@ reduce can only perform + or *
             print(myFilter(arr: numberArray, closure: { $0 < operationNumber }))
         } else if functionOperator == ">" {
             print(myFilter(arr: numberArray, closure: { $0 > operationNumber }))
+        } else {
+            print("\ninvalid input\n")
+            return higherOrder()
         }
         
     case "reduce":
@@ -122,27 +126,35 @@ reduce can only perform + or *
             print(myReduce(arr: numberArray, number: operationNumber){$0 + $1})
         } else if functionOperator == "*" {
             print(myReduce(arr: numberArray, number: operationNumber){$0 * $1})
+        } else {
+            print("\ninvalid input\n")
+            return higherOrder()
         }
+      
         
     case "map":
         if functionOperator == "*" {
             print(myMap(arr: numberArray){operationNumber * $0})
         } else if functionOperator == "/" {
             print(myMap(arr: numberArray){operationNumber / $0})
+        } else {
+            print("\ninvalid input\n")
+            return higherOrder()
         }
     default :
-        print("invalid input")
+        print("\ninvalid input\n")
+        return higherOrder()
     }
     
 }
 
 func calculateAgain() {
-    print("Do you want to compute more? Enter yes if so")
-    let gameContinue = readLine()?.lowercased()
-    if gameContinue == "yes" {
+    print("\nDo you want to compute more? Enter yes if so\n")
+    let calculatorContinue = readLine()?.lowercased()
+    if calculatorContinue == "yes" || calculatorContinue == "y" {
         calculator()
     } else {
-        print("GoodBye")
+        print("\nGoodBye\n")
     }
 }
 
