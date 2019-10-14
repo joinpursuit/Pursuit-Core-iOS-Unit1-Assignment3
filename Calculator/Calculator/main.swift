@@ -46,7 +46,7 @@ extension String {
 private let operationArray = ["+","-","/","*"]
 
 func mainMenu() {
-    print("Welcome, Enter 1 for basic math or 2 for basic higher order functions")
+    print("Welcome, Enter 1 for basic math or 2 for basic math higher order functions")
     let mathOption = readLine()!
     switch mathOption {
     case "1" :
@@ -122,7 +122,7 @@ reduce can only perform + or * \n
         }
         
     case "reduce":
-        if functionOperator == "+"{
+        if functionOperator == "+" {
             print(myReduce(arr: numberArray, number: operationNumber){$0 + $1})
         } else if functionOperator == "*" {
             print(myReduce(arr: numberArray, number: operationNumber){$0 * $1})
@@ -164,3 +164,5 @@ func calculator() {
 }
 
 calculator()
+
+
