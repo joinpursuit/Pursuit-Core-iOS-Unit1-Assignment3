@@ -28,17 +28,49 @@ let closureOperation = mathStuffFactory(opString: "+")
 let result = closureOperation(45, 5)
 print("result of operation is:", result)
 */
+
+var operations: ([String: (Double, Double) -> Double]) = ["+": { $0 + $1 },
+"-": { $0 - $1 },
+"*": { $0 * $1 },
+"/": { $0 / $1 }]
+
 func getUserInput () -> String {
     guard let userInput = readLine() else {
         return "You did not enter a valid response"
     }
     return userInput
 }
-//regularCalc used to create regular
-func regularCalc() {
+
+//regularCalc used to create regular calculations
+func regularCalc() -> String {
+    print("Enter your operation. e.g 5 + 3")
+    let userReadline = getUserInput()
     
+    let operands:Set = ["+", "-", "*", "/", "?"]
+    
+    //value used to set a default operand if no operand exists
+    var operand:Character = "X"
+    let trimmedUserReadLine = userReadline.replacingOccurrences(of: " ", with: "")
+    
+    //trims the string for consistancy of at least 3 characters
+    print(trimmedUserReadLine)
+
+
+    //gets operand
+    for char in trimmedUserReadLine {
+        if operands.contains(String(char)){
+            operand = char
+        } else {
+            return "User did not enter an operand to evaluate an expression. Consider using +, -, *, /, or ? as operands"
+        }
+        
+    }
+    print(operand)
+    
+    return userReadline
 }
 
+//highOrderCalc used to create high order calculations
 func highOrderCalc() {
     
 }
