@@ -8,7 +8,7 @@
 
 import Foundation
 
-func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
+func mathStuffFactory(opString: String) -> (Double, Double) -> Double { // take in a string and returns closure
   switch opString {
   case "+":
     return {x, y in x + y } //shorthand closure syntax
@@ -19,13 +19,81 @@ func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
   case "/":
     return {x, y in x / y }
   default:
-    return {x, y in x + y }
+    return {x, y in x + y } // here is where it will reject unknown operators. this doesnt work: {print("Unknown operator: \(opString)")
   }
 }
 
-let closureOperation = mathStuffFactory(opString: "+") // operation is a closure that takes in 2 doubles and returns a double.
-let result = closureOperation(45, 5)
+// let closureOperation = mathStuffFactory(opString: "+") // closureOperation is a closure that takes in 2 doubles and returns a double.
+// let result = closureOperation(45, 5) // this is the closure that the function returns.
 
-print("result of operation is \(result)")
+// print("result of operation is \(result)")
 
 
+
+print("Enter type of calculation?")
+let calcType = readLine() ?? "no entry"
+
+switch calcType.lowercased() {
+
+//====================================
+// IF THE USER ENTERS REGULAR: 
+//====================================
+    
+case "regular":
+    print("Regular is it")
+    print("Enter your operation")
+    let operation = readLine() ?? "no entry"
+    let operationComponents = operation.components(separatedBy: " ")
+    // print(operationComponents)
+    
+    // cast and then unwrap using optional binding
+
+    let operandOne = Double(operationComponents[0])
+    let opt = operationComponents[1]
+    let operandTwo = Double(operationComponents[2])
+        
+    
+    // checks if the operation is valid otherwise reject unknown operators.
+    
+    let allowedOpt = ["+", "-", "?", "/", "*"]
+    
+    if allowedOpt.contains(opt) {
+    
+    if let operand1 = operandOne, let operand2 = operandTwo {
+        let closureOperation = mathStuffFactory(opString: opt)
+        let result = closureOperation(Double(operand1), Double(operand2))
+        print("\(operation) = \(result)")
+        
+    } else {
+        print("Please enter your calculation in the correct format e.g. 5 + 3")
+    }
+    } else {
+        print("Unknown operator: \(opt)") // here is where it will reject unknown operators.
+    }
+
+
+//====================================
+// IF THE USER ENTERS HIGHER ORDER
+//====================================
+
+case "high order":
+    print("High order it is ")
+default:
+    print("You have to choose a type. ")
+}
+
+
+
+
+
+
+
+// part 2a:
+// func myFilter(inputArray: [Int], filter: (Int) -> Bool) -> [Int] {
+// filter is a closure that rerturns a bool
+// myFitler returns an array of Int.
+
+// use .hasprefix to check if user enter "map"
+// keep the user entry to this format: map 1,5,2,7,3,4 by * 3
+
+// note: operands are the numbers snd the operator is the (+, - ,/, *)
