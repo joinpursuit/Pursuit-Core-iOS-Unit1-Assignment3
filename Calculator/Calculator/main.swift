@@ -135,7 +135,8 @@ default:
 
 
 
-
+//====================================================================================
+// NEW STUFF: 
 
 
 // part 2:
@@ -163,6 +164,37 @@ return filteredArray
 }
 
 // testing filter function:
-let numbers = [1,5,2,7,3,4]
+var numbers = [1,5,2,7,3,4]
 
 print(myFilter(inputArray: numbers, filter: { $0 < 4 }))
+
+// creating map function:
+
+// re-creating the built in map function
+// map function will take in 2 parameters,
+// first parameter is an array of ints
+// second parameter is a closure
+
+func customMap(arr: [Int], closure: (Int) -> (Int)) -> [Int]  { // the closure takes an Int and returns an Int after its completed the "transformation"
+var transformedArray = [Int]()
+    for num in arr {
+        // perform transformation based on closure and append result in transformedArr
+        
+        transformedArray.append(closure(num)) // closure expacts an argument of type Int
+    }
+    
+  return transformedArray
+}
+
+
+// using customMap function above take in an array of numbers and return the squared values of each of those elements
+
+// input: [1, 2, 3, 4, 5, 6, 7]
+// output: [1, 4, 9, 16, 25, 36, 49]
+
+numbers = [1, 2, 3, 4, 5, 6, 7]
+
+print(customMap(arr: numbers , closure: {$0 * $0})) // $0 is shorthand syntax
+
+// longer form { number in number * number}
+
