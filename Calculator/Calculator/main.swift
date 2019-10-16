@@ -42,11 +42,11 @@ func getUserInput () -> String {
 }
 
 //regularCalc used to create regular calculations
-func regularCalc() -> String {
+func regularCalc() {
     print("Enter your operation. e.g 5 + 3")
     let userReadline = getUserInput()
     
-    let operatorsArr = ["+", "-", "*", "/", "?"]
+    let operatorsArr:[Character] = ["+", "-", "*", "/", "?"]
     
     //value used to set a default operand if no operand exists
     var operatorChar:Character = "X"
@@ -57,18 +57,15 @@ func regularCalc() -> String {
     print(trimmedUserReadLine)
     
     //checks to see if a operator is existant
-    guard trimmedUserReadLine.contains{element in
-        if operatorsArr[$0] == element {
-            return true
-        } else {
-            return false
-        }} else {
-        return "Operator not found."
+    
+    guard trimmedUserReadLine.contains(operatorsArr) else {
+        print("Operator not found.")
+        regularCalc()
     }
 
     //gets operand
     for char in trimmedUserReadLine {
-        if operatorsArr.contains(String(char)){
+        if operatorsArr.contains(char){
             operatorChar = char
         }
     }
@@ -80,15 +77,13 @@ func regularCalc() -> String {
     let operandsDouble = operandsString.compactMap{Double($0)}
     
     guard operandsDouble.count >= 2 else {
-        return "User did not enter at least 2 integers to evaluate the given expression"
+        print("User did not enter at least 2 integers to evaluate the given expression")
     }
-    
-
     
     print("The operator char is:", operatorChar)
     print("The operands are:", operandsDouble)
     
-    return userReadline
+    //return userReadline
 }
 
 //highOrderCalc used to create high order calculations
