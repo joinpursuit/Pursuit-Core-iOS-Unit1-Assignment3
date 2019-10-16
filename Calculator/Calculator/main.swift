@@ -46,7 +46,7 @@ func regularCalc() -> String {
     print("Enter your operation. e.g 5 + 3")
     let userReadline = getUserInput()
     
-    let operatorsSet:Set = ["+", "-", "*", "/", "?"]
+    let operatorsArr = ["+", "-", "*", "/", "?"]
     
     //value used to set a default operand if no operand exists
     var operatorChar:Character = "X"
@@ -55,24 +55,38 @@ func regularCalc() -> String {
     //trims the string for consistancy of at least 3 characters
     let trimmedUserReadLine = userReadline.replacingOccurrences(of: " ", with: "")
     print(trimmedUserReadLine)
+    
+    //checks to see if a operator is existant
+    guard trimmedUserReadLine.contains{element in
+        if operatorsArr[$0] == element {
+            return true
+        } else {
+            return false
+        }} else {
+        return "Operator not found."
+    }
 
     //gets operand
     for char in trimmedUserReadLine {
-        if operatorsSet.contains(String(char)){
+        if operatorsArr.contains(String(char)){
             operatorChar = char
         }
     }
     
-    //gets the operands of a expression as data type string
+    //gets the operands of a expression as data type string and store them into an array
     operandsString = trimmedUserReadLine.components(separatedBy: String(operatorChar))
-    let operandsInt = operandsString.compactMap{Int($0)}
-    if operandsInt.count != 2 {
+    
+    //gets operands as an Int and store them to an array of Int
+    let operandsDouble = operandsString.compactMap{Double($0)}
+    
+    guard operandsDouble.count >= 2 else {
         return "User did not enter at least 2 integers to evaluate the given expression"
     }
+    
 
     
     print("The operator char is:", operatorChar)
-    print("The operands are:", operandsInt)
+    print("The operands are:", operandsDouble)
     
     return userReadline
 }
