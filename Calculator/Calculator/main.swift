@@ -88,13 +88,12 @@ case "regular":
                 } while guess != randomOpt
                 
                 // random selction of an operation ✅
-                // call mathstuff function with that operation
-                // call the closure with the 2 operands
+                // call mathstuff function with that operation ✅
+                // call the closure with the 2 operands ✅
                 // print result
-                // prompt a guess
-                // check if guess is == to randomly selected opt - print correct
-                // else print wrong and repeat guess (should there be a limit amount of guesses? - probably)
-                
+                // prompt a guess ✅
+                // check if guess is == to randomly selected opt - print correct ✅
+                // else print wrong and repeat guess (should there be a limit amount of guesses? - probably) ✅
                 
                 
             } else {
@@ -105,20 +104,32 @@ case "regular":
             }
             
         } else {
-        print("Please enter your calculation in the correct format e.g. 5 + 3")
+            print("Please enter your calculation in the correct format e.g. 5 + 3")
+        }
+        
+    } else {
+        print("Unknown operator: \(opt)") // here is where it will reject unknown operators.
     }
+    //====================================
+    // IF THE USER ENTERS HIGHER ORDER
+    //====================================
     
-} else {
-    print("Unknown operator: \(opt)") // here is where it will reject unknown operators.
-}
-//====================================
-// IF THE USER ENTERS HIGHER ORDER
-//====================================
-
 case "high order":
-print("High order it is ")
+    print("High order it is ")
+    print("Enter your operation e.g filter 1,5,2,7,3,4 by < 4")
+    let operation = readLine() ?? "no entry"
+       let operationComponents = operation.components(separatedBy: " ")
+       // print(operationComponents)
+       
+       // cast and then unwrap using optional binding
+       
+       let operandOne = Double(operationComponents[0])
+       let opt = operationComponents[1]
+       let operandTwo = Double(operationComponents[2])
+    
 default:
-print("You have to choose a type. ")
+    print("You have to choose a type. ")
+
 }
 
 
@@ -127,7 +138,7 @@ print("You have to choose a type. ")
 
 
 
-// part 2a:
+// part 2:
 // func myFilter(inputArray: [Int], filter: (Int) -> Bool) -> [Int] {
 // filter is a closure that rerturns a bool
 // myFitler returns an array of Int.
@@ -136,3 +147,22 @@ print("You have to choose a type. ")
 // keep the user entry to this format: map 1,5,2,7,3,4 by * 3
 
 // note: operands are the numbers snd the operator is the (+, - ,/, *)
+
+// creating filter function:
+
+func myFilter(inputArray: [Int], filter: (Int) -> Bool) -> [Int] { // filter is a closure that takes an Int and returns a bool
+    var filteredArray: [Int] = []
+
+    for num in inputArray{
+        if filter(num) {
+            filteredArray.append(num)
+        }
+    }
+
+return filteredArray
+}
+
+// testing filter function:
+let numbers = [1,5,2,7,3,4]
+
+print(myFilter(inputArray: numbers, filter: { $0 < 4 }))
