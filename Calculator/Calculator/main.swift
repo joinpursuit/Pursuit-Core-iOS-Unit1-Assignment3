@@ -281,7 +281,7 @@ Enter a higher order operation to perform. Your operation should be of the follo
             }
             print("Reduced result is: \(reduceResult)")
         } else {
-            print("Incorrect input format. Could not perform operation.")
+            print("Invalid input. Could not perform operation.")
         }
         
         
