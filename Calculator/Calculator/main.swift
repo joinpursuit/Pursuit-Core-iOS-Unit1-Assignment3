@@ -31,6 +31,17 @@ func customMap(_ arr: [Int], closure: (Int) -> (Int) ) -> [Int] {
     return transformedArr
 }
 
+func customFilter (_ arr: [Int], closure: (Int) -> (Bool) ) -> [Int] {
+    var filteredArr = [Int]()
+    for num in arr {
+        if closure(num) {
+            filteredArr.append(num)
+        }
+    }
+    return filteredArr
+}
+
+
 let operationsSet: Set<String.SubSequence> = ["+","-","/","*"]
 let operationsSet1 = Set("+-/*")
 var exitis = false
@@ -86,10 +97,44 @@ repeat {
         
     case "2":
         print("Work in progress.")
-        print("Enter your operation e.g filter 1, 2, 4 ,5 < 4")
+        print("Enter your operation e.g filter 1,2,4,5 < 4")
         print("filtered results is [1, 2]")
+        let operationsForMap = Set("*/+-")
+        let operationsForFilter = [">","<",">=","<=","==","!="]
         let answer = (readLine() ?? "").components(separatedBy: " ")
-        
+        let stringNumArray = answer[1].components(separatedBy: ",")
+        let numArray = stringNumArray.map({ (Int($0) ?? -1)  })
+
+        if answer[0] == "map" && operationsForMap.contains(Character(answer[3]) ) {
+            switch answer[3] {
+            case "+":
+                print(customMap(numArray, closure: {$0 + (Int(answer[4]) ?? -1) } ) )
+            case "-":
+                print(customMap(numArray, closure: {$0 - (Int(answer[4]) ?? -1) } ) )
+            case "/":
+                print(customMap(numArray, closure: {$0 / (Int(answer[4]) ?? -1) } ) )
+            case "*":
+                print(customMap(numArray, closure: {$0 * (Int(answer[4]) ?? -1) } ) )
+            default:
+                print(customMap(numArray, closure: {$0 + (Int(answer[4]) ?? -1) } ) )
+            }
+            
+        } else if answer[0] == "filter" && operationsForFilter.contains(answer[3]) {
+            switch answer[3] {
+            case ">":
+                print(customFilter(numArray, closure: { $0 > (Int(answer[3]) ?? -1) }) )
+            case "<":
+                print(customFilter(numArray, closure: { $0 < (Int(answer[3]) ?? -1) }) )
+            case ">=":
+                print(customFilter(numArray, closure: { $0 >= (Int(answer[3]) ?? -1) }) )
+            case "<=":
+                print(customFilter(numArray, closure: { $0 <= (Int(answer[3]) ?? -1) }) )
+            case "==":
+                print(customFilter(numArray, closure: { $0 == (Int(answer[3]) ?? -1) }) )
+            default:
+                print(customFilter(numArray, closure: { $0 != (Int(answer[3]) ?? -1) }) )
+            }
+        }
         
     default:
         print("Please input a valid answer.")
