@@ -23,13 +23,7 @@ func mathStuffFactory(opString: String) -> (Double, Double) -> Double { // take 
     }
 }
 
-// Testing mathStuffFactory function:
-    // let closureOperation = mathStuffFactory(opString: "+") // closureOperation is a closure that takes in 2 doubles and returns a double.
-    // let result = closureOperation(45, 5) // this is the closure that the function returns.
-    // print("result of operation is \(result)")
-
-
-// Creating filter function:
+// Filter function:
 
 func myFilter(inputArray: [Int], filter: (Int) -> Bool) -> [Int] { // filter is a closure that takes an Int and returns a bool
     var filteredArray: [Int] = []
@@ -43,16 +37,7 @@ func myFilter(inputArray: [Int], filter: (Int) -> Bool) -> [Int] { // filter is 
 return filteredArray
 }
 
-// Testing filter function:
-    // var numbers = [1,5,2,7,3,4]
-    // print(myFilter(inputArray: numbers, filter: { $0 < 4 }))
-
-// Creating map function:
-
-    // re-creating the built in map function
-    // map function will take in 2 parameters,
-    // first parameter is an array of ints
-    // second parameter is a closure`
+// Map function:
 
 func customMap(arr: [Int], closure: (Int) -> (Int)) -> [Int]  { // the closure takes an Int and returns an Int after its completed the "transformation"
 var transformedArray = [Int]()
@@ -65,13 +50,7 @@ var transformedArray = [Int]()
   return transformedArray
 }
 
-// Testing the map function:
-    // using customMap function above take in an array of numbers and return the squared values of each of those elements
-    // let numbers = [1, 2, 3, 4, 5, 6, 7]
-    // print(customMap(arr: numbers , closure: {$0 * $0})) // $0 is shorthand syntax
-    // longer form { number in number * number}
-
-// Creating reduce function:
+// Reduce function:
 
 func myReduce(arr: [Int], startNum: Int, reduceClosure: (Int, Int) -> (Int)) -> Int {
     var reducedNum = startNum
@@ -82,15 +61,14 @@ func myReduce(arr: [Int], startNum: Int, reduceClosure: (Int, Int) -> (Int)) -> 
     return reducedNum
 }
 
-// print(myReduce(arr: numbers, startNum: 0, reduceClosure: {$0 + $1}))
-
-
-
 //=====================================================================================================
 //                                   START OF CALCULATOR:
 //=====================================================================================================
 
-print("Enter type of calculation?")
+var calcAgain = "no"
+
+repeat {
+print("Enter type of calculation: regular or high order?")
 let calcType = readLine() ?? "no entry"
 
 switch calcType.lowercased() {
@@ -101,27 +79,31 @@ switch calcType.lowercased() {
     
 case "regular":
     print("Regular is it")
-    print("Enter your operation")
-    let operation = readLine() ?? "no entry"
-    let operationComponents = operation.components(separatedBy: " ")
-    // print(operationComponents)
     
-    // cast and then unwrap using optional binding
+    var inputCount = 3
+    var operation = ""
+    var operationComponents = [""]
     
+    repeat {
+    if inputCount != 5 {
+        print("Please enter value in correct format:")
+    }
+    print("Enter your operation: e.g. 5 + 3")
+    operation = readLine() ?? "no entry"
+    operationComponents = operation.components(separatedBy: " ")
+    inputCount = operationComponents.count
+    } while inputCount != 3
+        
     let operandOne = Double(operationComponents[0])
     let opt = operationComponents[1]
     let operandTwo = Double(operationComponents[2])
-    
-    
-    // checks if the operation is valid otherwise reject unknown operators.
     
     let allowedOpt = ["+", "-", "?", "/", "*"]
     
     if allowedOpt.contains(opt) {
         
-        if let operand1 = operandOne, let operand2 = operandTwo { // if operand are valid values
+        if let operand1 = operandOne, let operand2 = operandTwo {
             
-            // check if the opt is ? if it is play the random game else do the following... using the function:
             
             if opt == "?" {
                 print("Play Random guessing game")
@@ -159,7 +141,7 @@ case "regular":
         }
         
     } else {
-        print("Unknown operator: \(opt)") // here is where it will reject unknown operators.
+        print("Unknown operator: \(opt)")
     }
     //====================================
     // IF THE USER ENTERS HIGHER ORDER
@@ -168,9 +150,22 @@ case "regular":
 case "high order":
     
     print("High order it is ")
+    var inputCount = 5
+    var operation = ""
+    var operationComponents = [""]
+    
+    repeat {
+    if inputCount != 5 {
+        print("Please enter value in correct format:")
+    }
+        
     print("Enter your operation e.g filter 1,5,2,7,3,4 by < 4")
-    let operation = readLine() ?? "no entry"
-    let operationComponents = operation.components(separatedBy: " ")
+    operation = readLine() ?? "no entry"
+    operationComponents = operation.components(separatedBy: " ")
+    inputCount = operationComponents.count
+    } while inputCount != 5
+
+    
     let numArrayAsStr = operationComponents[1].components(separatedBy: ",")
     let numArrayAsInt =  numArrayAsStr.map{Int($0) ?? 0} // the numbers as an array of Int
     
@@ -181,18 +176,15 @@ case "high order":
         
         switch comparingType {
         case ">":
-            print("Your choice is >")
             print("\(operation) = \(myFilter(inputArray: numArrayAsInt, filter: {$0 > comparingNum}))")
 
         case "<":
-            print("Your choice is <")
             print("\(operation) = \(myFilter(inputArray: numArrayAsInt, filter: {$0 < comparingNum}))")
 
         case "%":
-            print("Your choice is %")
             print("\(operation) = \(myFilter(inputArray: numArrayAsInt, filter: {$0 % comparingNum == 0}))") // what ever is in the filter has to return a Bool!!!!
         default:
-            print("I cant do this \(comparingType)")
+            print("I do not recognize your operator: \(comparingType). Please check your format.")
 
         }
 
@@ -211,14 +203,11 @@ case "high order":
         case "/":
             print(customMap(arr: numArrayAsInt , closure: {$0 / mappingNum}))
         default:
-            print("I do not recognize your operator: \(mappingType)")
+            print("I do not recognize your operator: \(mappingType). Please check your format.")
         }
 
     } else if operation.hasPrefix("reduce") {
-        // input: reduce 1,2,3,4,5,6,7 by * 2
-        
         let reducingType = operationComponents[3]
-        
         let reducingNum = Int(operationComponents[operationComponents.count - 1]) ?? 0
         
         if reducingType == "+" {
@@ -228,32 +217,21 @@ case "high order":
             
         print(myReduce(arr: numArrayAsInt, startNum: reducingNum, reduceClosure: {$0 * $1}))
         } else {
-            print("I dont do \(reducingType)")
+            print("I do not recognize your operator: \(reducingType). Please check your format.")
         }
         
     } else {
         print("Could not recognize your high order function.")
     }
+   // }
     
 default:
     print("You have to choose a type. ")
 
 }
+print("Calculate again? yes or no?")
+    calcAgain = readLine() ?? "no"
+
+} while calcAgain.lowercased() == "yes"
 
 
-
-
-//====================================================================================
-// NOTES FOR SELF:
-
-// func myFilter(inputArray: [Int], filter: (Int) -> Bool) -> [Int] {
-// filter is a closure that rerturns a bool
-// myFitler returns an array of Int.
-
-// use .hasprefix to check if user enter "map"
-// keep the user entry to this format: map 1,5,2,7,3,4 by * 3
-
-// note: operands are the numbers snd the operator is the (+, - ,/, *)
-// also use .count to determine if the user enters the correct number of values 5 + 5 array.count should be 3 if more user isnt following the rules. of 5 for high order
-
-//possibly use a switch statement to identify what higher function has been entered and then use an if statement to compare the condition and run it accodingly, so if the user entry is ">" do this in the function? maybe this will work.
