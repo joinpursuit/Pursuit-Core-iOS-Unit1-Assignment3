@@ -41,9 +41,21 @@ func customFilter (_ arr: [Int], closure: (Int) -> (Bool) ) -> [Int] {
     return filteredArr
 }
 
+func customReduce (_ arr: [Int],_ initialVal: Int,_ operation: String, closure: (Int) -> (Int) ) -> Int {
+    var sum = initialVal
+    for num in arr {
+        if operation == "+" {
+            sum += closure(num)
+        } else if operation == "*" {
+            sum *= closure(num)
+        }
+    }
+    return sum
+}
 
 let operationsSet: Set<String.SubSequence> = ["+","-","/","*"]
 let operationsSet1 = Set("+-/*")
+let yesStatements: Set<String> = ["Sure","ok","k","why not", "only because you said so", "lol k", "yes", "y"]
 var exitis = false
 
 func randomOperator(_ x:Double, _ y:Double) {
@@ -96,46 +108,66 @@ repeat {
         }
         
     case "2":
-        print("Work in progress.")
-        print("Enter your operation e.g filter 1,2,4,5 < 4")
-        print("filtered results is [1, 2]")
-        let operationsForMap = Set("*/+-")
-        let operationsForFilter = [">","<",">=","<=","==","!="]
-        let answer = (readLine() ?? "").components(separatedBy: " ")
-        let stringNumArray = answer[1].components(separatedBy: ",")
-        let numArray = stringNumArray.map({ (Int($0) ?? -1)  })
-
-        if answer[0] == "map" && operationsForMap.contains(Character(answer[3]) ) {
-            switch answer[3] {
-            case "+":
-                print(customMap(numArray, closure: {$0 + (Int(answer[4]) ?? -1) } ) )
-            case "-":
-                print(customMap(numArray, closure: {$0 - (Int(answer[4]) ?? -1) } ) )
-            case "/":
-                print(customMap(numArray, closure: {$0 / (Int(answer[4]) ?? -1) } ) )
-            case "*":
-                print(customMap(numArray, closure: {$0 * (Int(answer[4]) ?? -1) } ) )
-            default:
-                print(customMap(numArray, closure: {$0 + (Int(answer[4]) ?? -1) } ) )
+        var operationDone = false
+        while operationDone == false {
+            print("Enter your operation e.g filter 1,2,4,5 by < 4")
+            print("Filtered result is [1, 2]")
+            let operationsForMap = Set("*/+-")
+            let operationsForFilter = [">","<",">=","<=","==","!="]
+            let operationsForReduce = Set("+*")
+            let answer = (readLine() ?? "").components(separatedBy: " ")
+            
+            guard answer.count == 5 else {
+                print("Incorrect input.")
+                continue
             }
             
-        } else if answer[0] == "filter" && operationsForFilter.contains(answer[3]) {
-            switch answer[3] {
-            case ">":
-                print(customFilter(numArray, closure: { $0 > (Int(answer[3]) ?? -1) }) )
-            case "<":
-                print(customFilter(numArray, closure: { $0 < (Int(answer[3]) ?? -1) }) )
-            case ">=":
-                print(customFilter(numArray, closure: { $0 >= (Int(answer[3]) ?? -1) }) )
-            case "<=":
-                print(customFilter(numArray, closure: { $0 <= (Int(answer[3]) ?? -1) }) )
-            case "==":
-                print(customFilter(numArray, closure: { $0 == (Int(answer[3]) ?? -1) }) )
-            default:
-                print(customFilter(numArray, closure: { $0 != (Int(answer[3]) ?? -1) }) )
+            let stringNumArray = answer[1].components(separatedBy: ",")
+            let numArray = stringNumArray.map({ (Int($0) ?? -1)  })
+            
+            if answer[0] == "map" && operationsForMap.contains(Character(answer[3]) ) {
+                switch answer[3] {
+                case "+":
+                    print(customMap(numArray, closure: {$0 + (Int(answer[4]) ?? -1) } ) )
+                case "-":
+                    print(customMap(numArray, closure: {$0 - (Int(answer[4]) ?? -1) } ) )
+                case "/":
+                    print(customMap(numArray, closure: {$0 / (Int(answer[4]) ?? -1) } ) )
+                case "*":
+                    print(customMap(numArray, closure: {$0 * (Int(answer[4]) ?? -1) } ) )
+                default:
+                    print("Error occured, wrong logical operation.")
+                    sleep(1)
+                    continue
+                }
+                operationDone = true
+                
+            } else if answer[0] == "filter" && operationsForFilter.contains(answer[3]) {
+                switch answer[3] {
+                case ">":
+                    print(customFilter(numArray, closure: { $0 > (Int(answer[4]) ?? -1) }) )
+                case "<":
+                    print(customFilter(numArray, closure: { $0 < (Int(answer[4]) ?? -1) }) )
+                case ">=":
+                    print(customFilter(numArray, closure: { $0 >= (Int(answer[4]) ?? -1) }) )
+                case "<=":
+                    print(customFilter(numArray, closure: { $0 <= (Int(answer[4]) ?? -1) }) )
+                case "==":
+                    print(customFilter(numArray, closure: { $0 == (Int(answer[4]) ?? -1) }) )
+                case "!=":
+                    print(customFilter(numArray, closure: { $0 != (Int(answer[4]) ?? -1) }) )
+                default:
+                    print("Error occured, wrong logical operation.")
+                    sleep(1)
+                    continue
+                }
+                operationDone = true
+
+            } else if answer[0] == "reduce" && operationsForReduce.contains(Character(answer[3])) {
+                print(customReduce(numArray, Int(answer[4]) ?? -1, answer[3], closure: {$0}))
+                operationDone = true
             }
         }
-        
     default:
         print("Please input a valid answer.")
         continue
@@ -143,7 +175,7 @@ repeat {
     
     print("Would you like to play again?")
     let yesOrNo = readLine() ?? ""
-    if yesOrNo != "yes" {
+    if !yesStatements.contains(yesOrNo) {
         break
     }
     
