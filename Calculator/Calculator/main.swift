@@ -71,6 +71,21 @@ var transformedArray = [Int]()
     // print(customMap(arr: numbers , closure: {$0 * $0})) // $0 is shorthand syntax
     // longer form { number in number * number}
 
+// Creating reduce function:
+
+func myReduce(arr: [Int], startNum: Int, reduceClosure: (Int, Int) -> (Int)) -> Int {
+    var reducedNum = startNum
+    
+    for num in arr {
+        reducedNum = reduceClosure(reducedNum, num)
+    }
+    return reducedNum
+}
+
+// print(myReduce(arr: numbers, startNum: 0, reduceClosure: {$0 + $1}))
+
+
+
 //=====================================================================================================
 //                                   START OF CALCULATOR:
 //=====================================================================================================
@@ -200,7 +215,24 @@ case "high order":
         }
 
     } else if operation.hasPrefix("reduce") {
-        print("Its reduce high order function")
+        // input: reduce 1,2,3,4,5,6,7 by * 2
+        
+        let reducingType = operationComponents[3]
+        
+        let reducingNum = Int(operationComponents[operationComponents.count - 1]) ?? 0
+        
+        if reducingType == "+" {
+            
+        print(myReduce(arr: numArrayAsInt, startNum: reducingNum, reduceClosure: {$0 + $1}))
+        } else if reducingType == "*" {
+            
+        print(myReduce(arr: numArrayAsInt, startNum: reducingNum, reduceClosure: {$0 * $1}))
+        } else {
+            print("I dont do \(reducingType)")
+        }
+        
+    } else {
+        print("Could not recognize your high order function.")
     }
     
 default:
@@ -222,6 +254,6 @@ default:
 // keep the user entry to this format: map 1,5,2,7,3,4 by * 3
 
 // note: operands are the numbers snd the operator is the (+, - ,/, *)
-// also use .count to determine if the user enters the correct number of values 5 + 5 array.count should be 3 if more user isnt following the rules.
+// also use .count to determine if the user enters the correct number of values 5 + 5 array.count should be 3 if more user isnt following the rules. of 5 for high order
 
 //possibly use a switch statement to identify what higher function has been entered and then use an if statement to compare the condition and run it accodingly, so if the user entry is ">" do this in the function? maybe this will work.
