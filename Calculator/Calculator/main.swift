@@ -8,7 +8,7 @@
 
 import Foundation
 
-func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
+func mathStuffFactory(opString: Character) -> (Double, Double) -> Double {
   switch opString {
   case "+":
     return {x, y in x + y } // short hand closure sequence
@@ -29,10 +29,20 @@ let result = closureOperation(45, 5)
 print("result of operation is:", result)
 */
 
-//var operations: ([String: (Double, Double) -> Double]) = ["+": { $0 + $1 },
-//"-": { $0 - $1 },
-//"*": { $0 * $1 },
-//"/": { $0 / $1 }]
+
+//
+
+//CustomMap function
+func customMap(arr:[Int], closure: (Int) -> (Int)) -> [Int] {
+    var transformedArr = [Int]()
+    for num in arr {
+        // perform transformation based on closure and append result in transformedArr
+        transformedArr.append(closure(num))
+    }
+    
+    
+    return transformedArr
+}
 
 func getUserInput () -> String {
     guard let userInput = readLine() else {
@@ -47,14 +57,17 @@ func regularCalc() {
     let userReadline = getUserInput()
     
     let operatorsArr:[Character] = ["+", "-", "*", "/", "?"]
+    let operatorsArrRandom:[Character] = ["+", "-", "*", "/"]
     
     //value used to set a default operand if no operand exists
     var operatorChar:Character = "X"
-    var operandsString = [String]()
+    var operandsStringArr = [String]()
     
     //trims the string for consistancy of at least 3 characters
     let trimmedUserReadLine = userReadline.replacingOccurrences(of: " ", with: "")
-    print(trimmedUserReadLine)
+    
+    //Print statement to check code
+//    print(trimmedUserReadLine)
     
     
     //checks to see if a operator is existant
@@ -87,22 +100,57 @@ func regularCalc() {
     }
     
     //gets the operands of a expression as data type string and store them into an array
+    operandsStringArr = trimmedUserReadLine.components(separatedBy: String(operatorChar))
     
-    //another way of getting the operands via trimmedString:
+    var operandsDoubleArr = [Double]()
+    //var operandsDouble = Double()
     
-    
-    operandsString = trimmedUserReadLine.components(separatedBy: String(operatorChar))
-    
-    //gets operands as an Int and store them to an array of Int
-    let operandsDoubleArr = operandsString.compactMap{Double($0)}
-    
-    guard operandsDoubleArr.count >= 2 else {
-        return print("User did not enter at least 2 integers to evaluate the given expression")
+    //gets operands as an String and store them to an array of Int
+    for operandString in operandsStringArr {
+        guard let operandsDouble = Double(operandString) else {
+            return print("User input: \(userReadline) did not enter valid data type of double or integer to be evaluated")
+        }
+        operandsDoubleArr.append(operandsDouble)
+        //operandsDoubleArr.append(Double(operandString) ?? 0)
     }
     
-    print("The operator char is:", operatorChar)
-    print("The operands are:", operandsDoubleArr)
+    //Print statement to check code
+//    print(operandsDoubleArr)
+    //operandsDoubleArr = Double(operandsStringArr)//operandsString.compactMap{Double($0)}
     
+    //this code never gets run
+//    guard operandsDoubleArr.count >= 2 else {
+//        return print("User did not enter at least 2 valid data types to evaluate the given expression")
+//    }
+    
+    //Once user enters the correct input go into here:
+    if (operatorChar == "?") {
+        guard let operatorRandomChar = operatorsArrRandom.randomElement() else {
+            return print("Operator could not be found to choose randomly from an array")
+        }
+        
+        let operatorSelectMath = mathStuffFactory(opString: operatorRandomChar)
+        let resultant = operatorSelectMath(operandsDoubleArr[0], operandsDoubleArr[1])
+       
+        print(resultant)
+        print("Guess the operator used: +, -, *, or /")
+        let userOperatorGuess = getUserInput()
+        
+        if Character(userOperatorGuess) == operatorRandomChar {
+            print("Correct!")
+        } else {
+            print("Incorrect!")
+        }
+        
+    } else {
+        let calcMath = mathStuffFactory(opString: operatorChar)
+        let result = calcMath(operandsDoubleArr[0], operandsDoubleArr[1])
+        print("\(userReadline) = \(result)")
+    }
+    //Print statements to check if code is correct
+//    print("The operator char is:", operatorChar)
+//    print("The operands are:", operandsDoubleArr)
+
     //return userReadline
 }
 
