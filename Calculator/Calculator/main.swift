@@ -12,7 +12,7 @@ var stop = false
 let calculationList: Set<String> = ["+", "-", "*", "/"]
 
 func space() {
-    for _ in 0...50 {
+    for _ in 0...70 {
         print()
     }
 }
@@ -87,9 +87,10 @@ while stop == false {
     let wordCheck = splitInput1[0]
     
     func stringSepration() {
+        var processingOfFilter: [Substring.SubSequence] = []
         inputNumber = Int(splitInput1[splitInput1.count - 1]) ?? 0
         for element in splitInput1 where element != splitInput1[splitInput1.count - 1] {
-            let processingOfFilter = element.split(separator: ",")
+            processingOfFilter = element.split(separator: ",")
             for value in processingOfFilter {
                 if Int(value) != nil {
                     numberList.append(Int(value)!)
@@ -122,24 +123,24 @@ while stop == false {
             let result = myFilter(inputArray: numberList, filter: inputNumber, filterType: filterType)
             print("here is the filted list: \(result)")
         } else {
-            print("I got into the filter")
+            print("I got into the filter but wasn't sure what to do with it")
         }
     case "reduce":
         stringSepration()
         if numberList.count != 0 && reduceType.count > 0 {
             let result = myReduce(inputArray: numberList, startingNumber: inputNumber, reduceType: reduceType)
-            print("here is the filted list: \(result)")
+            print("here is the reduced list: \(result)")
         } else {
-            print("I got into the reduce")
+            print("I got into the reduce but wasn't sure what to do with it")
         }
     case "map":
         stringSepration()
         if numberList.count != 0 && inputNumber != 0 {
             print(numberList)
             let result = myMaps(inputArray: numberList, inputInt: inputNumber)
-            print("here is the filted list: \(result)")
+            print("here is the mapped list: \(result)")
         } else {
-            print("I got into the map")
+            print("I got into the map but wasn't sure what to do with it")
         }
     default:
         calculation()
