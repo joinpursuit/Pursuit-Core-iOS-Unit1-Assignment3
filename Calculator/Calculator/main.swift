@@ -8,7 +8,6 @@
 
 import Foundation
 
-// returns a closure... then a Double
 func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
   switch opString {
   case "+":
@@ -24,45 +23,68 @@ func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
   }
 }
 
-// ASK THE USER WHETHER THEY WANT A PROBLEM LVL 1 or LVL 2
+let userTurns = 1
 
-print("Enter a type of calculation, 1 (regular) or 2 (higher order)")
-let userResponse = readLine()?.lowercased() ?? ""
-
+repeat {
+    
+    print()
+    print("Enter a type of calculation, 1 (regular) or 2 (higher order)")
+    let userResponse = readLine()?.lowercased() ?? ""
     switch userResponse {
+        
+        
     case "1":
+        
         sleep(1)
         print()
         print("Enter your operation. (Ex: 5 * 2)")
+        
+        
+        // VARIABLES FOR QUESTION MARK OPERATION
+        let randomOperator = ["+", "-", "*", "/", "%"]
+        let questionMark: Set<Character> = ["?"]
+        // REGULAR ARITHMETIC
+        // MUST PUT IT INTO FUNCTION
         let userInput = readLine() ?? ""
         let userInputArr = userInput.components(separatedBy: " ")
 
+        
+//        let closureOperation = mathStuffFactory(opString: userInputArr[1])
+//        let result = closureOperation(Double(userInputArr[0]) ?? 0.0,(Double(userInputArr[2]) ?? 0.0))
+//
+//        print("result of your operation is \(userInput) = \(result)")
 
-        let closureOperation = mathStuffFactory(opString: userInputArr[1])
-        let result = closureOperation(Double(userInputArr[0]) ?? 0.0,(Double(userInputArr[2]) ?? 0.0))
-
-        print("result of operation is \(result)")
-    case "2":
-        sleep(1)
-        print()
-        print("Enter your operation. (Ex: 1,2,3,6,4,3,6,8,9,4 by < 5)")
-    default:
-      print("Please enter a valid response! 🤬")
+        let operatorSymbol = userInputArr[1]
+        
+        if questionMark.contains(Character(operatorSymbol)) {
+        let randomOperation = randomOperator.randomElement() ?? "+"
+        let convertRandom = mathStuffFactory(opString: randomOperation)
+        let randomCalculation = convertRandom((Double(userInputArr[0]) ?? 0.0),(Double(userInputArr[2]) ?? 0.0))
+        print("result of your operation is \(userInput) = \(randomCalculation)")
+        } else {
+            let closureOperation = mathStuffFactory(opString: userInputArr[1])
+            let result = closureOperation(Double(userInputArr[0]) ?? 0.0,(Double(userInputArr[2]) ?? 0.0))
+            
+            print("result of your operation is \(userInput) = \(result)")
+        }
+        
+        //CASE TWO
+        case "2":
+               sleep(1)
+               print()
+               print("Enter your operation. (Ex: filter 1,2,3,6,4,3,6,8,9,4 by < 5)")
+        
+        
+        default:
+        print("Please enter a valid response! 🤬")
     }
-
-//let userInput = readLine() ?? ""
-//var userInputArr = userInput.components(separatedBy: " ")
-//
-//
-//let closureOperation = mathStuffFactory(opString: userInputArr[1])
-//let result = closureOperation(Double(userInputArr[0]) ?? 0.0,(Double(userInputArr[2]) ?? 0.0))
-//
-//print("result of operation is \(result)")
-
-
-//var operations: ([String: (Double, Double) -> Double]) = [
-//    "+": { $0 + $1 },
-//    "-": { $0 - $1 },
-//    "*": { $0 * $1 },
-//    "/": { $0 / $1 }
-//]
+    
+    print()
+    print("Would you like to calculate again?")
+    let userDecision = readLine() ?? "".lowercased()
+    if userDecision == "yes" {
+        continue
+    } else if userDecision == "no"{
+        break
+    }
+}   while (userTurns > 0)
