@@ -25,8 +25,9 @@ func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
 //calculator loop
 var condition = true
 var correctMath: Set<Character> = ["+", "-", "/", "*"]
-var randomSymbol = "?"
+var randomSymbol: Set<Character> = ["?"]
 let mathSymbolsArray = ["+", "-", "/", "*"]
+
 pickCalculatorLoop: repeat {
     print("Your options are 1 regular🤓calculator or 2 ultra🧐calculator")
     var pickCalculator = readLine()
@@ -43,13 +44,12 @@ pickCalculatorLoop: repeat {
             let result = operation(Double(calculator1Array[0]) ?? 0.0, Double(calculator1Array[2]) ?? 0.0)
             print(result)
             print("Would you like to calculate again?")
-            // after creating the if else statement, none of these statements print...
-        } else if calculator1Array.contains(randomSymbol) {
+        } else if randomSymbol.contains(Character(operatorSymbol)) {
             let randomOperation = mathSymbolsArray.randomElement() ?? "+"
-            var convertRandom = mathStuffFactory(opString: randomOperation)
+            let convertRandom = mathStuffFactory(opString: randomOperation)
             let randomCalc = convertRandom((Double(calculator1Array[0]) ?? 0.0), (Double(calculator1Array[2]) ?? 0.0))
             print(randomCalc)
-        }else{
+        } else {
             print("Try a math problem")
         }
             case "2" :
@@ -57,7 +57,7 @@ pickCalculatorLoop: repeat {
             print("a. Filter : < , >")
             print("b. Map: numbers * number , numbers / number")
             print("c. Reduce: creating a sum of numbers, multiplying an array")
-        var pickCalc2options = readLine()
+//        var pickCalc2options = readLine()
 //            switch pickCalc2options {
 //            case "a" :
 //                filterResponse = readLine() ?? "1,2,3 < 4"
@@ -84,29 +84,16 @@ pickCalculatorLoop: repeat {
 // convert group of numbers to an array
 // convert the < or > symbol to an operation
 // convert 3 to a double
+
+var lessThanGreaterThan : Set<Character> = ["<" , ">"]
 var filterResponse = readLine() ?? "1,2,3 < 4"
-func filterOperation(inputArray: [Double], filter: Double) {
-    var filtResArr = [""]
-    switch filtResArr[1] {
-    case ">" :
-        filtResArr = filterResponse.components(separatedBy: ">")
-        for numbers in filtResArr {
-            if filtResArr[0] > filtResArr[2] {
-                let result = [numbers]
-                print("\(result) greater than \(filtResArr[2])")
-            }
+let filtResArray = filterResponse.components(separatedBy: String(lessThanGreaterThan) )
+func filter(inputArray index0: [Double], filter index2: (Double) -> Bool) -> [Double] {
+    for char in filtResArray[0] {
+        var nowDoubles : Double = char
+        
     }
-    case "<" :
-        filtResArr = filterResponse.components(separatedBy: "<")
-        for numbers in filtResArr {
-            if filtResArr[0] > filtResArr[2] {
-                let result = [numbers]
-                print("\(result) less than \(filtResArr[2])")
-        }
-        }
-    default:
-        print("Filter only allows you to compare a group of numbers to another number")
-    }
+    
 }
 
 //===============================================================================
