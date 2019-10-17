@@ -30,7 +30,21 @@ print("result of operation is:", result)
 */
 
 
-//
+//game restart function
+
+func gameRestart() {
+    print("Calculate again, yes or no?")
+    let userResponse = getUserInput()
+    switch userResponse {
+    case "yes":
+        calculator()
+    case "no":
+        break
+    default:
+        print("User did not enter a valid \"yes\" or \"no\" response")
+        gameRestart()
+    }
+}
 
 //CustomMap function
 func customMap(arr:[Int], closure: (Int) -> (Int)) -> [Int] {
@@ -161,21 +175,26 @@ func highOrderCalc() {
 
 // loop should start here
 //Start of calculator to prompt user response
-print("Enter type of calculation, 1 (regular) or 2 (high order)")
-var validCalcChoice = Int()
-if let calcChoice = Int(getUserInput()) {
-    validCalcChoice = calcChoice
-} else {
-    print("User did not enter a valid integer response")
-}
 
-//begining of branch between regular and high order function
-switch validCalcChoice{
-case 1:
-    regularCalc()
-case 2:
-    highOrderCalc()
-default:
-    print("User did not enter a valid integer response to choose between type of calculation, 1 (regular) or 2 (high order)")
-}
+func calculator() {
+    print("Enter type of calculation, 1 (regular) or 2 (high order)")
+    var validCalcChoice = Int()
+    if let calcChoice = Int(getUserInput()) {
+        validCalcChoice = calcChoice
+    } else {
+        print("User did not enter a valid integer response")
+    }
 
+    //begining of branch between regular and high order function
+    switch validCalcChoice{
+    case 1:
+        regularCalc()
+        gameRestart()
+    case 2:
+        highOrderCalc()
+        gameRestart()
+    default:
+        print("User did not enter a valid integer response to choose between type of calculation, 1 (regular) or 2 (high order)")
+    }
+}
+calculator()
