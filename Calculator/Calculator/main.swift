@@ -50,12 +50,14 @@ if decision == 1{
     
     func str(in input: String) -> Double {
         let seperator = userInput.components(separatedBy: " ")
-        let opString = seperator[1]
-        let closureOperation = mathStuffFactory(opString: opString)
         var result = 0.0
         if seperator.count != 3 {
-            return result
+            print("Please enter an equation. Example: 7 + 2")
+//            userInput = readLine() ?? "0"
+//            return result
         } else {
+            let opString = seperator[1]
+            let closureOperation = mathStuffFactory(opString: opString)
             result = closureOperation(Double(seperator[0]) ?? 0.0 , Double(seperator[2]) ?? 0.0)
         }
         
