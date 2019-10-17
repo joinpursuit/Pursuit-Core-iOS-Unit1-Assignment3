@@ -31,7 +31,6 @@ print("result of operation is:", result)
 
 
 //game restart function
-
 func gameRestart() {
     print("Calculate again, yes or no?")
     let userResponse = getUserInput()
@@ -53,7 +52,6 @@ func customMap(arr:[Int], closure: (Int) -> (Int)) -> [Int] {
         // perform transformation based on closure and append result in transformedArr
         transformedArr.append(closure(num))
     }
-    
     
     return transformedArr
 }
@@ -83,7 +81,6 @@ func regularCalc() {
     //Print statement to check code
 //    print(trimmedUserReadLine)
     
-    
     //checks to see if a operator is existant
     var operatorCheck = false
     for operators in operatorsArr {
@@ -93,11 +90,6 @@ func regularCalc() {
         } else {
             operatorCheck = false
         }
-        //guard attempt of checking if userEntered an operator
-//        guard trimmedUserReadLine.contains(operators) else {
-//            //regularCalc()
-//            return print("Operator not found to evaluate the given input: \(userReadline). Consider using the operators: +, -, *, /, or ?")
-//        }
     }
     
     // if operator exists the rest of the code is run
@@ -130,12 +122,6 @@ func regularCalc() {
     
     //Print statement to check code
 //    print(operandsDoubleArr)
-    //operandsDoubleArr = Double(operandsStringArr)//operandsString.compactMap{Double($0)}
-    
-    //this code never gets run
-//    guard operandsDoubleArr.count >= 2 else {
-//        return print("User did not enter at least 2 valid data types to evaluate the given expression")
-//    }
     
     //Once user enters the correct input go into here:
     if (operatorChar == "?") {
@@ -165,15 +151,16 @@ func regularCalc() {
 //    print("The operator char is:", operatorChar)
 //    print("The operands are:", operandsDoubleArr)
 
-    //return userReadline
 }
 
 //highOrderCalc used to create high order calculations
 func highOrderCalc() {
+    print("Enter your operation. e.g filter 1,2,3,4,5,6 by < 4")
+    let userReadline = getUserInput()
+    
     
 }
 
-// loop should start here
 //Start of calculator to prompt user response
 
 func calculator() {
