@@ -41,26 +41,69 @@ func arithemticCalcution(in input: String) -> Double {
     return result
 }
 
-print("""
-Welcome to the calculator.
-Please enter "1" for normal operations.
-Enter "2" for higher order operations.
-""")
+func mapFunction(in inputArray: [Double], closure: (Double) -> Double) -> [Double] {
+    var userInputArr = [Double]()
+    for num in inputArray{
+        userInputArr.append(num)
+    }
+    return inputArray
+}
 
-var userChoice = readLine()
-var decision = Int(userChoice!) ?? 1
-decision = Int(userChoice!) ?? 2
+func filterFunction(arr: [Double], closure: (Double) -> Bool) -> [Double] {
+    var result = [Double]()
+    for num in arr{
+        if closure(num){
+            result.append(num)
+        }
+    }
+    return result
+}
 
+//var userChoice = readLine()
+//func myFilter(inputArray: [Int], filter: Int -> String) -> [Int] {
+//    let filteredResults = inputArray.filter {
+//
+//    }
+//}
+
+repeat{
+    print("""
+    Welcome to the calculator.
+    Please enter "1" for normal operations.
+    Enter "2" for higher order operations.
+    """)
+    let userChoice = readLine()
+    var decision = Int(userChoice!) ?? 1
+    decision = Int(userChoice!) ?? 2
 if decision == 1{
     print("Please enter an equation. Example: 5 + 2 ")
     let userInput = readLine() ?? "0"
     let result = arithemticCalcution(in: userInput)
     print(result)
-}
+    }
+//    var highOrderInput = readLine()
+     if decision == 2{
+        print("""
+Please enter a "High Order" operation. e.g map 1,5,2,7,3,4 by * 3
+""")
+        let highOrderInput = readLine() ?? "0"
+        let userInputArr = highOrderInput.components(separatedBy: " ")
+        let numAsStringArr = userInputArr[1].components(separatedBy: ",")
+        let numAsDouble = numAsStringArr.map{ Double($0) ?? 0.0 }
+        let byNumber = Double(userInputArr[4]) ?? 0.0
+        if userInputArr[0] == "map"{
+            switch userInputArr[3] {
+            case "+":
+                let highResult = mapFunction(in: numAsDouble, closure: { $0 + byNumber })
+                print(highResult)
+            default:
+                print("jhvdf")
+            }
+//            let highResult = mapFunction(in: numAsDouble, closure: )
+        }
+    }
 
-
-
-
+} while true
 
 
 
