@@ -52,110 +52,74 @@ pickCalculatorLoop: repeat {
         } else {
             print("Try a math problem")
         }
-            case "2" :
-            print("Choose an operation")
-            print("a. Filter : < , >")
-            print("b. Map: numbers * number , numbers / number")
-            print("c. Reduce: creating a sum of numbers, multiplying an array")
-//        var pickCalc2options = readLine()
-//            switch pickCalc2options {
-//            case "a" :
-//                filterResponse = readLine() ?? "1,2,3 < 4"
-//            case "b" :
-//
-//            case "c" :
-//
-//            default :
-//
-//        }
-            default :
-            print("Sorry, can't do that. I'm just a calculator.")
-            print("Try a math problem.")
-            pickCalculator = readLine()
-        }
-    } while condition == true
-
-//===============================================================================
-// Ultra Calculator functions
-// filter : numbers less than given number
-// filter : numbers greater than given number
-
-// user input would look like "1,6,5,4 < 3"
-// convert group of numbers to an array
-// convert the < or > symbol to an operation
-// convert 3 to a double
-
-var lessThanGreaterThan : Set<Character> = ["<" , ">"]
-var filterResponse = readLine() ?? "1,2,3 < 4"
-let filtResArray = filterResponse.components(separatedBy: String(lessThanGreaterThan) )
-func filter(inputArray index0: [Double], filter index2: (Double) -> Bool) -> [Double] {
-    for char in filtResArray[0] {
-        var nowDoubles : Double = char
+    case "2" :
+        print("Choose an operation")
+        print("Filter : < , >  example: \"Filter 1,2,3 by < 4\"")
+        print("Map: number +,-,*,/ by a number. example: \"Map 1,2,3 by * 3\" = 2,4,6 ")
+        print("Reduce: creating a sum of numbers, multiplying an array")
         
+        //map
+        var Input = readLine() ?? "0"
+        var userInputArr = Input.components(separatedBy: " ")
+        var numAsStringArr = userInputArr[1].components(separatedBy: ",")
+        var numAsDouble = numAsStringArr.map{ Double($0) ?? Double(0.0) }
+        var byNumber = userInputArr[4]
+        func map(arr: [Double], closure: (Double) -> Double ) -> [Double] {
+            var result = [Double]()
+            for num in arr {
+                result.append(closure(num))
+            }
+            return result
+        }
+        
+        // filter
+        func filter(arr: [Double], closure: (Double) -> Bool) -> [Double] {
+            var result = [Double]()
+            for num in arr {
+                if closure(num) {
+                    result.append(num)
+                }
+            }
+            return result
+        }
+        
+        //applied
+        if userInputArr[0] == "map" {
+            switch userInputArr[3] {
+            case "*":
+                let results = map(arr: numAsDouble , closure: { ($0) * (Double(byNumber) ?? 1.0) })
+                print(results)
+            case "+":
+                let results = map(arr: numAsDouble , closure: { ($0) + (Double(byNumber) ?? 1.0) })
+                print(results)
+            case "-":
+                let results = map(arr: numAsDouble , closure: { ($0) - (Double(byNumber) ?? 1.0) })
+                print(results)
+            case "/":
+                let results = map(arr: numAsDouble , closure: { ($0) / (Double(byNumber) ?? 1.0) })
+                print(results)
+            default :
+                print("Not valid")
+                print("Try typing: \"Map 1,2,3 by * 3\" ")
+            }
+            } else if userInputArr[0] == "filter" {
+                switch userInputArr[3] {
+                case ">":
+                    let results = filter(arr: numAsDouble , closure: { ($0) > (Double(byNumber) ?? 1.0) })
+                    print(results)
+                case "<":
+                    let results = filter(arr: numAsDouble , closure: { ($0) < (Double(byNumber) ?? 1.0) })
+                                       print(results)
+                default:
+                    print("Not valid")
+                    print("Try typing: \"Filter 1,2,3 by < 4\" ")
+                }
+        }
+    default :
+        print("Sorry, can't do that. I'm just a calculator.")
+        print("Try a math problem.")
+        pickCalculator = readLine()
     }
-    
-}
-
-//===============================================================================
-
-// Sad attempts...
-//        } else {
-//            print("This isn't a math problem")
-//
-//        }
-
-//        regularCalc(input: regularCalculatorResponse)
-//        let result = regularCalc(input: regularCalculatorResponse)
-//        print(result)
-//        if regularCalculatorResponse.contains(correctMathSymbols) {
-//        regularCalc(input: regularCalculatorResponse)
-//        let result = regularCalc(input: regularCalculatorResponse)
-//        print(result)
-//        } else if regularCalculatorResponse.contains("?") {
-//        random(userInput: regularCalculatorResponse)
-//        } else {
-//            print("Sorry, can't do that. I'm just a calculator.")
-//            print("Try a math problem.")
-//          regularCalculatorResponse = readLine() ?? "1 + 1"
-//===============================================================================
-//function to turn readLine response into a math problem for regular calculator
+} while condition == true
 
 
-
-//var regularCalculatorResponse = readLine() ?? "1 + 1"
-//func regularCalc(input: String) -> (Double) {
-//    let correctMathSymbols = "- + / *"
-//    let regularResArr = regularCalculatorResponse.components(separatedBy: " ")
-//    let number1 = Double(regularResArr[0])
-//    let number2 = Double(regularResArr[2])
-//    let mathSymbol = regularResArr[1]
-//
-//    let operation = mathStuffFactory(opString: mathSymbol)
-//
-//    let result = operation(number1 ?? 0.0 , number2 ?? 0.0)
-//    for _ in mathSymbol {
-//        if mathSymbol.contains(correctMathSymbols) {
-//            print(result)
-//            } else {
-//            print("Use a correct math symbol: - + / *")
-//            print("Try typing without spaces")
-//            regularCalculatorResponse = readLine() ?? "1 + 1"
-//    }
-//    }
-//    print(result)
-//    return result
-//}
-//===============================================================================
-//===============================================================================
-//random math operation "?"
-
-
-
-//func random(userInput: [String]) -> (Double) {
-//    var calculator1response = readLine() ?? "1 + 1"
-//    var calculator1Array = calculator1response.components(separatedBy: " ")
-//    var randomOperation = mathSymbolSet.randomElement() ?? "+"
-//    let convertRandom = mathStuffFactory(opString: randomOperation)
-//    let randomCalc = convertRandom((Double(calculator1Array[0]) ?? 0.0), (Double(calculator1Array[2]) ?? 0.0))
-//    return randomCalc
-//}
