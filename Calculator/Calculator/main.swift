@@ -45,6 +45,20 @@ func gameRestart() {
     }
 }
 
+//Part 2 custom functions of filter, map, and reduce:
+
+//FilterMap function
+
+func myFilter(inputArray: [Int], filter: (Int) -> Bool) -> [Int] {
+    var filteredArr = [Int]()
+    for element in inputArray {
+        if filter(element) {
+            filteredArr.append(element)
+        }
+    }
+    return filteredArr
+}
+
 //CustomMap function
 func customMap(arr:[Int], closure: (Int) -> (Int)) -> [Int] {
     var transformedArr = [Int]()
@@ -52,10 +66,10 @@ func customMap(arr:[Int], closure: (Int) -> (Int)) -> [Int] {
         // perform transformation based on closure and append result in transformedArr
         transformedArr.append(closure(num))
     }
-    
     return transformedArr
 }
 
+//function to get a valid userInput
 func getUserInput () -> String {
     guard let userInput = readLine() else {
         return "You did not enter a valid response"
@@ -157,7 +171,26 @@ func regularCalc() {
 func highOrderCalc() {
     print("Enter your operation. e.g filter 1,2,3,4,5,6 by < 4")
     let userReadline = getUserInput()
+    let trimmedUserReadline = userReadline.trimmingCharacters(in: .whitespaces)
+
+    let operations = ["filter", "map", "reduce"]
+    let operation = String()
     
+    
+    //to check if user entered a correct highOrder function to be evaluated
+    var operationCheck = false
+    for hiOrderFunc in operations{
+        if trimmedUserReadline.hasPrefix(hiOrderFunc) {
+            operationCheck = true
+            break
+        } else {
+            operationCheck = false
+        }
+    }
+    
+    guard operationCheck else {
+        return print("User input: \(userReadline) did not include a high order function such as (filter, map, or reduce) to evaluate on a given array of integers")
+    }
     
 }
 
