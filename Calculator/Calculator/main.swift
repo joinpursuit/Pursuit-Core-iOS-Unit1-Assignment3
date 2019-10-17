@@ -8,20 +8,20 @@
 
 import Foundation
 
-//func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
-//  switch opString {
-//  case "+":
-//    return {x, y in x + y } // short hand closure sequence
-//  case "-":
-//    return {x, y in x - y }
-//  case "*":
-//    return {x, y in x * y }
-//  case "/":
-//    return {x, y in x / y }
-//  default:
-//    return {x, y in x + y }
-//  }
-//}
+func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
+  switch opString {
+  case "+":
+    return {x, y in x + y } // short hand closure sequence
+  case "-":
+    return {x, y in x - y }
+  case "*":
+    return {x, y in x * y }
+  case "/":
+    return {x, y in x / y }
+  default:
+    return {x, y in x + y }
+  }
+}
 
 /*
 let closureOperation = mathStuffFactory(opString: "+")
@@ -29,10 +29,10 @@ let result = closureOperation(45, 5)
 print("result of operation is:", result)
 */
 
-var operations: ([String: (Double, Double) -> Double]) = ["+": { $0 + $1 },
-"-": { $0 - $1 },
-"*": { $0 * $1 },
-"/": { $0 / $1 }]
+//var operations: ([String: (Double, Double) -> Double]) = ["+": { $0 + $1 },
+//"-": { $0 - $1 },
+//"*": { $0 * $1 },
+//"/": { $0 / $1 }]
 
 func getUserInput () -> String {
     guard let userInput = readLine() else {
@@ -56,14 +56,30 @@ func regularCalc() {
     let trimmedUserReadLine = userReadline.replacingOccurrences(of: " ", with: "")
     print(trimmedUserReadLine)
     
-    //checks to see if a operator is existant
     
-    guard trimmedUserReadLine.contains(operatorsArr) else {
-        print("Operator not found.")
-        regularCalc()
+    //checks to see if a operator is existant
+    var operatorCheck = false
+    for operators in operatorsArr {
+        if trimmedUserReadLine.contains(operators){
+            operatorCheck = true
+            break
+        } else {
+            operatorCheck = false
+        }
+        //guard attempt of checking if userEntered an operator
+//        guard trimmedUserReadLine.contains(operators) else {
+//            //regularCalc()
+//            return print("Operator not found to evaluate the given input: \(userReadline). Consider using the operators: +, -, *, /, or ?")
+//        }
     }
-
-    //gets operand
+    
+    // if operator exists the rest of the code is run
+    guard operatorCheck
+    else {
+        return print("Operator not found to evaluate the given input: \(userReadline). Consider using the operators: +, -, *, /, or ?")
+    }
+        
+    //gets operator
     for char in trimmedUserReadLine {
         if operatorsArr.contains(char){
             operatorChar = char
@@ -71,17 +87,21 @@ func regularCalc() {
     }
     
     //gets the operands of a expression as data type string and store them into an array
+    
+    //another way of getting the operands via trimmedString:
+    
+    
     operandsString = trimmedUserReadLine.components(separatedBy: String(operatorChar))
     
     //gets operands as an Int and store them to an array of Int
-    let operandsDouble = operandsString.compactMap{Double($0)}
+    let operandsDoubleArr = operandsString.compactMap{Double($0)}
     
-    guard operandsDouble.count >= 2 else {
-        print("User did not enter at least 2 integers to evaluate the given expression")
+    guard operandsDoubleArr.count >= 2 else {
+        return print("User did not enter at least 2 integers to evaluate the given expression")
     }
     
     print("The operator char is:", operatorChar)
-    print("The operands are:", operandsDouble)
+    print("The operands are:", operandsDoubleArr)
     
     //return userReadline
 }
