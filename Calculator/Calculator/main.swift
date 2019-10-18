@@ -89,6 +89,7 @@ repeat {
             let result = closureOperation(Double(userInputArr[0]) ?? 0.0,(Double(userInputArr[2]) ?? 0.0))
             
             print("result of your operation is \(userInput) = \(result)")
+            print()
         }
         
         //CASE TWO (HIGHER FUNCTION
@@ -136,6 +137,9 @@ repeat {
             case "+":
                 let reducedResult = reduceFunc(arr: numAsDouble, closure: {$0 + num})
                 print(reducedResult + Double(userHighArr[4])!)
+            case "*":
+                let reducedResult = reduceFunc(arr: numAsDouble, closure: {$0 * num})
+                print(reducedResult * Double(userHighArr[4])!)
             default:
                 print("yuhhhhh")
             }
