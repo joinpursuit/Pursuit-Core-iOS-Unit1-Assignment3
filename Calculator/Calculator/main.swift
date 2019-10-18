@@ -45,7 +45,7 @@ func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
        }
 
 // REDUCE FUNCTION
-func reduceFunc(arr:[Double], closure:(Double) -> (Double)) -> Double {
+func reduceFunc(arr:[Double], closure:(Double) -> Double) -> Double {
     var reduceResult = Double()
     for num in arr {
         reduceResult += num
@@ -135,7 +135,7 @@ repeat {
             switch userHighArr[3] {
             case "+":
                 let reducedResult = reduceFunc(arr: numAsDouble, closure: {$0 + num})
-                print(reducedResult)
+                print(reducedResult + Double(userHighArr[4])!)
             default:
                 print("yuhhhhh")
             }
