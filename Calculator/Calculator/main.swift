@@ -71,7 +71,7 @@ let firstTermTuple = operationString.0
 let secondTermTuple = operationString.1
 let operandTuple = operationString.2
 
-//print(operationString)
+print(operationString)
 
 // function, takes  paramaters of sparsed string to determine key for dictionary of closures
 // and perform according operation closure
@@ -115,9 +115,24 @@ func basicCalculation(operandEntry : String?, termOne : Double?, termTwo : Doubl
     return result
 }
 
-
 // call function use tuple parts for necessary arguments for function into dictionary closure
 basicCalculation(operandEntry: operandTuple, termOne : firstTermTuple, termTwo: secondTermTuple, operationsClosure: operations)
+//------------------------------------High Order--------------------------------------
+func myFilter(inputArray: [Int], filter: (Int) -> Bool) -> [Int] {
+    
+    return[4]
+}
+
+print("Enter High order calculation(e.g. filter 1,2,3,4,5,6 by < 6): ")
+let highOrderEntry = readLine()
+let orderEntryParts = highOrderEntry?.components(separatedBy: ",")
+
+print(orderEntryParts ?? "")
+
+//let filteredList = myFilter(inputArray: <#T##[Int]#>, filter: <#T##(Int) -> Bool#>)
+
+
+
 
 
 /*
