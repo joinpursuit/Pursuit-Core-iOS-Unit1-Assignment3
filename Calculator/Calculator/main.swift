@@ -9,9 +9,7 @@
 import Foundation
 
 var operators = ["+", "-", "*", "/"]
-
-
-
+var calcStatus = true
 
 func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
     
@@ -41,14 +39,14 @@ func userInput() {
             return
         }
         mathResult = randomOperator(x: x, y: y, operatorSign: operation)
-        print("\(x) \(operation) \(y) = \(mathResult)")
-
+        print(mathResult)
+        
     } else if !operators.contains(operation) {
-
+        // placeholder for looping
     } else {
     let closureOperation = mathStuffFactory(opString: operation)
     let mathResult = closureOperation(x ?? 1.0, y ?? 1.0)
-   print("\(String(describing: x)) \(operation) \(String(describing: y)) = \(mathResult)")
+   print(mathResult)
     }
 }
 
@@ -61,8 +59,6 @@ func randomOperator(x: Double, y: Double, operatorSign: String) -> Double{
      result = closureOperation(x, y)
     print(result)
     guessingGame(operation: randomOperator)
-    
-    
     return result
 }
 
@@ -71,43 +67,114 @@ func guessingGame(operation: String) {
         print("invalid input")
         return
     }
-    
     guard operators.contains(userGuessSign) else {
         print("This is not a valid mathematical operator")
         return
     }
-    
     if userGuessSign == operation {
-        print("You got it write")
+        print("You got it right")
     } else {
         print("Not the right answer")
     }
 }
 
-//calculator loop:
+
+func customMap(arr:[Double], closure: (Double) -> Double) -> [Double] {
+    var transformedArr = [Double]()
+    for num in arr {
+        //perform transformation based on closure an append result in transformedArr
+        transformedArr.append(closure(num))
+    }
+return transformedArr
+}
+
+//func reduce(starting: Double, input: [Double] , operatorPicked: String) -> Double {
+//    var initialValue = starting
+//    for int in input {
+//
+//    }
+//    return 0
+//}
+
+func filterFunc(arr:[Double], closure:(Double) -> Bool) -> [Double] {
+    var result = [Double]()
+    
+    for num in arr{
+        if closure(num) {
+            result.append(num)
+        }
+    }
+    return result
+}
+
+
+
+
+
 print("Welcome to the calculator")
+repeat {
 print("enter 1 for regular function and 2 for high order functions")
-var modeSelect = readLine()?.lowercased() ?? " "
+    let modeSelect = readLine()?.lowercased() ?? " "
 switch modeSelect {
 case "1":
     print("enter a valid operation e.g x * y")
     userInput()
     
 case "2":
-    break
+    print("Please select a higher order function to use. Map, Reduce or Filter")
+    
+    let userInputsFilter = (readLine() ?? "").components(separatedBy: " ")
+    let removingCommas = userInputsFilter[1].components(separatedBy: ",")
+    let stringToArr = removingCommas.compactMap { Double($0) }
+    let byNum = Double(userInputsFilter[4]) ?? 0
+    print(userInputsFilter)
+    print(stringToArr)
+    if userInputsFilter[0] == "filter" {
+        switch userInputsFilter[3] {
+        case ">":
+            print(filterFunc(arr: stringToArr, closure: {$0 > byNum}))
+            
+        case "<":
+            print(filterFunc(arr: stringToArr, closure: {$0 < byNum}))
+        default:
+            print("Invalid input")
+            calcStatus = true
+        }
+    }
+        
+    if userInputsFilter[0] == "map" {
+        switch userInputsFilter[3] {
+        case "+":
+            print(customMap(arr: stringToArr, closure: {$0 + byNum}))
+        case"-":
+            print(customMap(arr: stringToArr, closure: {$0 - byNum}))
+        case"*":
+            print(customMap(arr: stringToArr, closure: {$0 * byNum}))
+        case"/":
+            print(customMap(arr: stringToArr, closure: {$0 / byNum}))
+        default:
+            print("Invalid input")
+            calcStatus = true
+        }
+    }
+            
     
 default :
-    break
+    print("invalid input")
+    calcStatus = true
+    
 }
     
+} while calcStatus == true
 
 
 
-
-
+var userInputsFilter = readLine()?.components(separatedBy: " ")
 
 let closureOperation = mathStuffFactory(opString: "+")
 let result = closureOperation(45, 5)
+
+
 
 
 
