@@ -2,7 +2,7 @@
 //  main.swift
 //  Calculator
 //
-//  Created by Alex Paul on 10/25/18.
+//  Created by Bienbenido Angeles on 10/11/19.
 //  Copyright © 2018 Pursuit. All rights reserved.
 //
 
@@ -47,17 +47,25 @@ func gameRestart() {
 
 //Part 2 custom functions of filter, map, and reduce:
 
-//FilterMap function
-
-func myFilter(inputArray: [Int], filter: (Int) -> Bool) -> [Int] {
-    var filteredArr = [Int]()
-    for element in inputArray {
-        if filter(element) {
-            filteredArr.append(element)
+//filter function
+func customFilter(arr: [Double], closure:(Double) -> Bool) -> [Double] {
+    var result = [Double]()
+    for num in arr {
+        if closure(num) {
+            result.append(num)
         }
     }
-    return filteredArr
+    return result
 }
+
+//print(filterFunc(arr: [3,4,5,6], closure: {$0 < 3}))
+
+/* if array[2] == "<" {
+    print(filterFunc(arr: [3,4,5,6], closure: {$0 < 3}))
+ } else {
+    print(filterFunc(arr: [3,4,5,6], closure: {$0 > 3}))
+ }
+*/
 
 //CustomMap function
 func customMap(arr:[Int], closure: (Int) -> (Int)) -> [Int] {
@@ -68,6 +76,24 @@ func customMap(arr:[Int], closure: (Int) -> (Int)) -> [Int] {
     }
     return transformedArr
 }
+
+//Reduce function
+func customReduce(arr: [Double], indexOneValue: Double, reducePair: (Double, Double) -> Double) -> (Double) {
+    
+    //if the array has a count that is by a single element, return that element
+    guard arr.count >= 1 else {
+        return indexOneValue
+    }
+
+    var currentValue = indexOneValue
+    
+    for nextValue in arr {
+        currentValue = reducePair(currentValue, nextValue)
+    }
+    
+    return currentValue
+}
+
 
 //function to get a valid userInput
 func getUserInput () -> String {
@@ -174,13 +200,14 @@ func highOrderCalc() {
     let trimmedUserReadline = userReadline.trimmingCharacters(in: .whitespaces)
 
     let operations = ["filter", "map", "reduce"]
-    let operation = String()
+    let operandsArr:[Character] = [">", "<", "*", "/", "+"]
+    var operationChar:Character = "X"
     
     
     //to check if user entered a correct highOrder function to be evaluated
     var operationCheck = false
     for hiOrderFunc in operations{
-        if trimmedUserReadline.hasPrefix(hiOrderFunc) {
+        if trimmedUserReadline.lowercased().hasPrefix(hiOrderFunc) {
             operationCheck = true
             break
         } else {
@@ -188,9 +215,35 @@ func highOrderCalc() {
         }
     }
     
+    //guard to check if user entered a correct operation
     guard operationCheck else {
         return print("User input: \(userReadline) did not include a high order function such as (filter, map, or reduce) to evaluate on a given array of integers")
     }
+    
+    
+    //trimmed user string to get the components of operation, array, operator, and the operand that'll be applied to the array
+    let trimmedUserReadlineArrComponents = trimmedUserReadline.components(separatedBy: " ")
+    print(trimmedUserReadlineArrComponents)
+    
+    //get the operator
+    
+    for char in trimmedUserReadline{
+        if operandsArr.contains(char) {
+            operationChar = char
+        }
+    }
+    
+    guard trimmedUserReadlineArrComponents.count == 5 && trimmedUserReadlineArrComponents[2] == "by" && trimmedUserReadlineArrComponents[3] ==  String(operationChar) else {
+        return print("User input: \(userReadline), did not correspond to the appropriate syntax of \"operation\" \"array\" \"by\" \"operator\" \"number\"")
+    }
+    
+    //switch statment on first index to do filter, map, or reduce
+//    switch {
+//        case
+//    }
+    
+    //
+    operationChar = Character(trimmedUserReadlineArrComponents[0])
     
 }
 
