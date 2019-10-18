@@ -251,19 +251,29 @@ func highOrderCalc() {
             print("filtered results are: ", customFilter(arr: subElementsOfArrayFromUserReadLineAsDouble, closure: {$0 < Double(trimmedUserReadlineArrComponents[4])!}))
         } else if operationChar == ">" {
             print("filted results are: ", customFilter(arr: subElementsOfArrayFromUserReadLineAsDouble, closure: {$0 > Double(trimmedUserReadlineArrComponents[4])!}))
+        } else {
+            print("User did not enter a valid operator for map function. Consider using < or >")
+            highOrderCalc()
         }
     case "map":
         if operationChar == "*" {
             print("mapped results are: ", customMap(arr: subElementsOfArrayFromUserReadLineAsDouble, closure: {$0 * Double(trimmedUserReadlineArrComponents[4])!}))
         } else if operationChar == "/" {
             print("mapped results are: ", customMap(arr: subElementsOfArrayFromUserReadLineAsDouble, closure: {$0 / Double(trimmedUserReadlineArrComponents[4])!}))
+        } else {
+            print("User did not enter a valid operator for map function. Consider using * or /")
+            highOrderCalc()
         }
     case "reduce":
         if operationChar == "+"{
             print("reduced results are: ", customReduce(arr: subElementsOfArrayFromUserReadLineAsDouble, operand: Double(trimmedUserReadlineArrComponents[4])!, reducePair: {$0 + $1}))
         } else if operationChar == "*" {
             print("reduce results are: ", customReduce(arr: subElementsOfArrayFromUserReadLineAsDouble, operand: Double(trimmedUserReadlineArrComponents[4])!, reducePair: {$0 * $1}))
+        } else {
+            print("User did not enter a valid operator for map function. Consider using + or *")
+            highOrderCalc()
         }
+        
     default:
         print("User did not enter a valid high order operation. If this code block is executed. You somehow broke my code. Congrats")
     }
