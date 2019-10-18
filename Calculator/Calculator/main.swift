@@ -220,30 +220,48 @@ func highOrderCalc() {
         return print("User input: \(userReadline) did not include a high order function such as (filter, map, or reduce) to evaluate on a given array of integers")
     }
     
-    
     //trimmed user string to get the components of operation, array, operator, and the operand that'll be applied to the array
     let trimmedUserReadlineArrComponents = trimmedUserReadline.components(separatedBy: " ")
     print(trimmedUserReadlineArrComponents)
     
+
     //get the operator
-    
     for char in trimmedUserReadline{
         if operandsArr.contains(char) {
             operationChar = char
         }
     }
     
-    guard trimmedUserReadlineArrComponents.count == 5 && trimmedUserReadlineArrComponents[2] == "by" && trimmedUserReadlineArrComponents[3] ==  String(operationChar) else {
+    //checks to see if there are at least 5 components,
+    guard trimmedUserReadlineArrComponents.count == 4 && trimmedUserReadlineArrComponents[2] == "by" && trimmedUserReadlineArrComponents[3] ==  String(operationChar) else {
         return print("User input: \(userReadline), did not correspond to the appropriate syntax of \"operation\" \"array\" \"by\" \"operator\" \"number\"")
     }
     
-    //switch statment on first index to do filter, map, or reduce
-//    switch {
-//        case
+    //convert string of index 1 to an array while seperating each character by ","
+    let subElementsOfArrayFromUserReadlineAsString = trimmedUserReadlineArrComponents[1].components(separatedBy: ",")
+    var subElementsOfArrayFromUserReadLineAsDouble = [Double]()
+    
+    for elementString in subElementsOfArrayFromUserReadlineAsString {
+        guard let elementDouble = Double(elementString) else {
+            return print("User input: \(subElementsOfArrayFromUserReadlineAsString), does not contain a set of values of datatype double. If it does, use \",\" to seperate between each element")
+        }
+        subElementsOfArrayFromUserReadLineAsDouble.append(elementDouble)
+    }
+    
+    
+    //switch statment based on userInput to do filter, map, or reduce
+    
+//    switch trimmedUserReadlineArrComponents[0].lowercased(){
+//    case "filter":
+//        break
+//    case "":
+//
+//    default:
+//        
 //    }
     
     //
-    operationChar = Character(trimmedUserReadlineArrComponents[0])
+//    operationChar = Character(trimmedUserReadlineArrComponents[0])
     
 }
 
