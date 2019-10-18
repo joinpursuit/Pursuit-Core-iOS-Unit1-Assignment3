@@ -120,11 +120,6 @@ basicCalculation(operandEntry: operandTuple, termOne : firstTermTuple, termTwo: 
 //------------------------------------High Order--------------------------------------
 var numArray : [Int] = []
 
-func myFilter(inputArray: [Int], filter: (Int) -> Bool) -> [Int] {
-    
-    return[4]
-}
-
 // Take High order string and cut out and convert the int array called numArray
 print("Enter High order calculation(e.g. filter 1,2,3,4,5,6 by < 6): ")
 let highOrderEntry = readLine() ?? " "
@@ -137,6 +132,42 @@ for strNum in numStringArray {
     let strToInt = Int(strNum)
     numArray.append(strToInt ?? 0)
 }
+
+let filterNum = Int(numStringArray[9])
+let pacMan = numStringArray[8]
+
+let filterize = {
+    var filteredNums = [Int]()
+    if pacMan == ">"    {
+        for num in numArray {
+            if num > filterNum ?? 0  {
+                filteredNums.append(num)
+            }
+        }
+    }
+    else    {
+        for num in numArray {
+            if num < filterNum ?? 0  {
+                filteredNums.append(num)
+            }
+        }
+    }
+}
+
+
+func myFilter(inputArray: [Int], filter: (Int) -> Bool) -> [Int] {
+    let intArr = [Int]()
+    
+    
+    
+    return []
+}
+
+func filterizeClosureMethod()    {
+    
+}
+
+//let closureFilter = myFilter()
 
 print(numArray)
 
