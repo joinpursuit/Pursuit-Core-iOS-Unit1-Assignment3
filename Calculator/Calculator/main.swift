@@ -117,13 +117,14 @@ repeat {
                     var guess = ""
                     
                     repeat {
+                        print()
                         print("Guess the operation")
                         guess = readLine() ?? "+"
                         
                         if guess == randomOpt {
-                            print("correct")
+                            print("Correct!!!!!! 👍🏼")
                         } else {
-                            print("wrong")
+                            print("Wrong... 👎🏼 Try again")
                         }
                         
                     } while guess != randomOpt
