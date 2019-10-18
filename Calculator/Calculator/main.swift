@@ -121,6 +121,9 @@ Please enter a "High Order" operation. e.g map 1,5,2,7,3,4 by * 3
                 case ">":
                     let filteredGreaterThan = filterFunction(arr: numAsDouble, closure: { $0 > userNum})
                     print(filteredGreaterThan)
+                case "<":
+                    let filteredLessThan = filterFunction(arr: numAsDouble, closure: {$0 < userNum})
+                    print(filteredLessThan)
                 default:
                     print("sjnfbhdv")
                 }
