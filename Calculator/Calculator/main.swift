@@ -68,8 +68,8 @@ func customFilter(arr: [Double], closure:(Double) -> Bool) -> [Double] {
 */
 
 //CustomMap function
-func customMap(arr:[Int], closure: (Int) -> (Int)) -> [Int] {
-    var transformedArr = [Int]()
+func customMap(arr:[Double], closure: (Double) -> (Double)) -> [Double] {
+    var transformedArr = [Double]()
     for num in arr {
         // perform transformation based on closure and append result in transformedArr
         transformedArr.append(closure(num))
@@ -77,22 +77,27 @@ func customMap(arr:[Int], closure: (Int) -> (Int)) -> [Int] {
     return transformedArr
 }
 
-//Reduce function
-func customReduce(arr: [Double], indexOneValue: Double, reducePair: (Double, Double) -> Double) -> (Double) {
+//Reduce function reduce 1,2,3 by + 30
+func customReduce(arr: [Double], operand:(Double), reducePair: (Double,Double) -> Double) -> Double {
+    var resultOfWholeFunc = operand
+    
+    guard let firstElement = arr.first else {
+        print("There are no elements within the array")
+        return 0.0
+    }
     
     //if the array has a count that is by a single element, return that element
     guard arr.count >= 1 else {
-        return indexOneValue
-    }
-
-    var currentValue = indexOneValue
-    
-    for nextValue in arr {
-        currentValue = reducePair(currentValue, nextValue)
+        return firstElement
     }
     
-    return currentValue
+    for currenValue in arr {
+       resultOfWholeFunc = reducePair(currenValue,resultOfWholeFunc)
+    }
+    
+    return resultOfWholeFunc
 }
+
 
 
 //function to get a valid userInput
@@ -222,7 +227,8 @@ func highOrderCalc() {
     
     //trimmed user string to get the components of operation, array, operator, and the operand that'll be applied to the array
     let trimmedUserReadlineArrComponents = trimmedUserReadline.components(separatedBy: " ")
-    print(trimmedUserReadlineArrComponents)
+    //print(trimmedUserReadlineArrComponents)
+    
     
 
     //get the operator
@@ -233,7 +239,7 @@ func highOrderCalc() {
     }
     
     //checks to see if there are at least 5 components,
-    guard trimmedUserReadlineArrComponents.count == 4 && trimmedUserReadlineArrComponents[2] == "by" && trimmedUserReadlineArrComponents[3] ==  String(operationChar) else {
+    guard trimmedUserReadlineArrComponents.count == 5 && trimmedUserReadlineArrComponents[2] == "by" && trimmedUserReadlineArrComponents[3] ==  String(operationChar) else {
         return print("User input: \(userReadline), did not correspond to the appropriate syntax of \"operation\" \"array\" \"by\" \"operator\" \"number\"")
     }
     
@@ -248,17 +254,32 @@ func highOrderCalc() {
         subElementsOfArrayFromUserReadLineAsDouble.append(elementDouble)
     }
     
+    //print(subElementsOfArrayFromUserReadLineAsDouble)
     
     //switch statment based on userInput to do filter, map, or reduce
     
-//    switch trimmedUserReadlineArrComponents[0].lowercased(){
-//    case "filter":
-//        break
-//    case "":
-//
-//    default:
-//        
-//    }
+    switch trimmedUserReadlineArrComponents[0].lowercased(){
+    case "filter":
+        if operationChar == "<" {
+            print(customFilter(arr: subElementsOfArrayFromUserReadLineAsDouble, closure: {$0 < Double(trimmedUserReadlineArrComponents[4])!}))
+        } else if operationChar == ">" {
+            print(customFilter(arr: subElementsOfArrayFromUserReadLineAsDouble, closure: {$0 > Double(trimmedUserReadlineArrComponents[4])!}))
+        }
+    case "map":
+        if operationChar == "*" {
+            print(customMap(arr: subElementsOfArrayFromUserReadLineAsDouble, closure: {$0 * Double(trimmedUserReadlineArrComponents[4])!}))
+        } else if operationChar == "/" {
+            print(customMap(arr: subElementsOfArrayFromUserReadLineAsDouble, closure: {$0 / Double(trimmedUserReadlineArrComponents[4])!}))
+        }
+    case "reduce":
+        if operationChar == "+"{
+            print(customReduce(arr: subElementsOfArrayFromUserReadLineAsDouble, operand: Double(trimmedUserReadlineArrComponents[4])!, reducePair: {$0 + $1}))
+        } else if operationChar == "*" {
+            print(customReduce(arr: subElementsOfArrayFromUserReadLineAsDouble, operand: Double(trimmedUserReadlineArrComponents[4])!, reducePair: {$0 * $1}))
+        }
+    default:
+        print("User did not enter a valid high order operation. If this code block is executed. You somehow broke my code. Congrats")
+    }
     
     //
 //    operationChar = Character(trimmedUserReadlineArrComponents[0])
