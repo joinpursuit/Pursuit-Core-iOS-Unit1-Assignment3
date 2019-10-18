@@ -261,21 +261,21 @@ func highOrderCalc() {
     switch trimmedUserReadlineArrComponents[0].lowercased(){
     case "filter":
         if operationChar == "<" {
-            print(customFilter(arr: subElementsOfArrayFromUserReadLineAsDouble, closure: {$0 < Double(trimmedUserReadlineArrComponents[4])!}))
+            print("filtered results are: ", customFilter(arr: subElementsOfArrayFromUserReadLineAsDouble, closure: {$0 < Double(trimmedUserReadlineArrComponents[4])!}))
         } else if operationChar == ">" {
-            print(customFilter(arr: subElementsOfArrayFromUserReadLineAsDouble, closure: {$0 > Double(trimmedUserReadlineArrComponents[4])!}))
+            print("filted results are: ", customFilter(arr: subElementsOfArrayFromUserReadLineAsDouble, closure: {$0 > Double(trimmedUserReadlineArrComponents[4])!}))
         }
     case "map":
         if operationChar == "*" {
-            print(customMap(arr: subElementsOfArrayFromUserReadLineAsDouble, closure: {$0 * Double(trimmedUserReadlineArrComponents[4])!}))
+            print("mapped results are: ", customMap(arr: subElementsOfArrayFromUserReadLineAsDouble, closure: {$0 * Double(trimmedUserReadlineArrComponents[4])!}))
         } else if operationChar == "/" {
-            print(customMap(arr: subElementsOfArrayFromUserReadLineAsDouble, closure: {$0 / Double(trimmedUserReadlineArrComponents[4])!}))
+            print("mapped results are: ", customMap(arr: subElementsOfArrayFromUserReadLineAsDouble, closure: {$0 / Double(trimmedUserReadlineArrComponents[4])!}))
         }
     case "reduce":
         if operationChar == "+"{
-            print(customReduce(arr: subElementsOfArrayFromUserReadLineAsDouble, operand: Double(trimmedUserReadlineArrComponents[4])!, reducePair: {$0 + $1}))
+            print("reduced results are: ", customReduce(arr: subElementsOfArrayFromUserReadLineAsDouble, operand: Double(trimmedUserReadlineArrComponents[4])!, reducePair: {$0 + $1}))
         } else if operationChar == "*" {
-            print(customReduce(arr: subElementsOfArrayFromUserReadLineAsDouble, operand: Double(trimmedUserReadlineArrComponents[4])!, reducePair: {$0 * $1}))
+            print("reduce results are: ", customReduce(arr: subElementsOfArrayFromUserReadLineAsDouble, operand: Double(trimmedUserReadlineArrComponents[4])!, reducePair: {$0 * $1}))
         }
     default:
         print("User did not enter a valid high order operation. If this code block is executed. You somehow broke my code. Congrats")
@@ -295,6 +295,7 @@ func calculator() {
         validCalcChoice = calcChoice
     } else {
         print("User did not enter a valid integer response")
+        calculator()
     }
 
     //begining of branch between regular and high order function
