@@ -132,10 +132,10 @@ Please enter a "High Order" operation. e.g map 1,5,2,7,3,4 by * 3
                 switch userInputArr[3] {
                 case "+":
                     let reduceAdd = reduceFunction(arr: numAsDouble, closure: {$0 + userNum})
-                    print(reduceAdd)
+                    print(reduceAdd + Double(userInputArr[4])!)
                 case "*":
                     let reduceMultiply = reduceFunction(arr: numAsDouble, closure: {$0 * userNum})
-                    print(reduceMultiply)
+                    print(reduceMultiply * Double(userInputArr[4])!)
                 default:
                     print("nookk")
                 }
