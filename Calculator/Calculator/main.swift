@@ -8,14 +8,14 @@
 
 import Foundation
 
-func mathStuffFactory(opString: String) -> (Double, Double) -> Double {      // closure
+func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
     var opString = opString
     if opString == "?" {
         opString = ["+", "-", "", "/"].randomElement() ?? ""
     }
     switch opString {
     case "+":
-        return {x, y in x + y }     // shorthand syntax
+        return {x, y in x + y }
     case "-":
         return {x, y in x - y }
     case "*":
@@ -26,13 +26,6 @@ func mathStuffFactory(opString: String) -> (Double, Double) -> Double {      // 
         return {x, y in x + y }
     }
 }
-
-//filter 1, 2,3, 4,5,6 by < 4
-//
-//1. filter
-//2. [1, 2,3, 4,5,6]
-//3. condition <, ==, >
-
 
 func userCalc (arr: [String]) -> Double {
     let operationClosure = mathStuffFactory(opString: arr[1])
@@ -65,8 +58,6 @@ func builtInReduce (arr: [Double], closure: (Double) -> (Double)) -> Double {
     }
     return reduceResult
 }
-
-
 
 var randomMath: Set<Character> = ["?"]
 var randomOperation: Set<Character> = ["+","-","*","/"]
@@ -102,9 +93,6 @@ continueloop: repeat {
                     print()
                     let result = userCalc(arr: userInputArr)
                     print(result)
-                    //            if userInputArr[1] = mathStuffFactory(opString: "?") {
-                    //                print("guess")
-                    //            }
                     print()
                     print("calculate again? Yes or no")
                     
@@ -124,11 +112,10 @@ continueloop: repeat {
             correctUserChoice = true
             
         case "b":
-
             
             print()
             print("Welcome to the higher order function section eg: \"filter 1,2,3,4,5 by < 7\"")
-        
+            print()
             let userHighOrder = readLine() ?? "a"
             let userHighArr = userHighOrder.components(separatedBy: " ")
             let numAsArr = userHighArr[1].components(separatedBy: ",")
@@ -139,28 +126,34 @@ continueloop: repeat {
                 switch userHighArr[3] {
                 case "*":
                     let mapResult = builtInMap(arr: numAsDouble, closure: {$0 * num})
+                    print()
                     print(mapResult)
                 case "-":
                     let mapResult = builtInMap(arr: numAsDouble, closure: {$0 - num})
+                    print()
                     print(mapResult)
                 case "+":
                     let mapResult = builtInMap(arr: numAsDouble, closure: {$0 + num})
+                    print()
                     print(mapResult)
                 case "/":
                     let mapResult = builtInMap(arr: numAsDouble, closure: {$0 / num})
+                    print()
                     print(mapResult)
                 default:
                     print("yup")
                 }
             }
-             else if userHighArr[0] == "filter" {
+            else if userHighArr[0] == "filter" {
                 switch userHighArr[3] {
                 case "<":
                     let filterAns = builtInFilter(arr: numAsDouble, closure: {$0 < num})
+                    print()
                     print(filterAns)
                 case ">":
                     let filterAns = builtInFilter(arr: numAsDouble, closure: {$0 > num})
-                    print("no")
+                    print()
+                    print(filterAns)
                 default:
                     print("yup")
                 }
@@ -169,48 +162,25 @@ continueloop: repeat {
                 switch userHighArr[3] {
                 case "+":
                     let reduceAns = builtInReduce(arr: numAsDouble, closure: {$0 + num})
+                    print()
                     print(reduceAns + num)
                 case "*":
                     let reduceAns = builtInReduce(arr: numAsDouble, closure: {$0 * num})
+                    print()
                     print(reduceAns * num)
                 default:
                     print("yup")
                 }
             }
-          correctUserChoice = true
-          default:
+            correctUserChoice = true
+        default:
             print()
             print("Please pick a or b.")
             userChoice = readLine() ?? "a"
             correctUserChoice = false
-    }
+        }
     }
         while correctUserChoice == false
 }
     while continueAgain == true
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//repeat {
-//    print("Enter you calculation")
-//    let userInput = readLine() ?? "a"
-//    let result = calculateOperation(str: userInput)
-//    print(result)
-
-
-// TODO: write code to ask the user if they want to calculate again
-
-//} while willContinue == "yes"
 
