@@ -56,7 +56,7 @@ pickCalculatorLoop: repeat {
         print("Choose an operation")
         print("Filter : < , >  example: \"Filter 1,2,3 by < 4\"")
         print("Map: number +,-,*,/ by a number. example: \"Map 1,2,3 by * 3\" = 2,4,6 ")
-        print("Reduce: creating a sum of numbers, multiplying an array")
+        print("Reduce: create a sum of numbers by a number ex: \"reduce 1,2,3,4 by + 10\", multiplying a set of numbers by a number ex: \"reduce 1,2,3,4 by * 2\"")
         
         var Input = readLine() ?? "0"
         var userInputArr = Input.components(separatedBy: " ")
@@ -134,7 +134,7 @@ pickCalculatorLoop: repeat {
                 print(results * (Double(byNumber) ?? 1.0))
             default:
                 print("Not valid")
-                print("Try typing: \"reduce 1,2,3,4 by * 1\" or \"reduce 1,2,3,4 by + 0\"")
+                print("Try typing: \"reduce 1,2,3,4 by * 2\" or \"reduce 1,2,3,4 by + 3\"")
             }
             }
         
