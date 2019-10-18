@@ -23,13 +23,6 @@ func mathStuffFactory(opString: Character) -> (Double, Double) -> Double {
   }
 }
 
-/*
-let closureOperation = mathStuffFactory(opString: "+")
-let result = closureOperation(45, 5)
-print("result of operation is:", result)
-*/
-
-
 //game restart function
 func gameRestart() {
     print("Calculate again, yes or no?")
@@ -57,15 +50,6 @@ func customFilter(arr: [Double], closure:(Double) -> Bool) -> [Double] {
     }
     return result
 }
-
-//print(filterFunc(arr: [3,4,5,6], closure: {$0 < 3}))
-
-/* if array[2] == "<" {
-    print(filterFunc(arr: [3,4,5,6], closure: {$0 < 3}))
- } else {
-    print(filterFunc(arr: [3,4,5,6], closure: {$0 > 3}))
- }
-*/
 
 //CustomMap function
 func customMap(arr:[Double], closure: (Double) -> (Double)) -> [Double] {
@@ -227,6 +211,8 @@ func highOrderCalc() {
     
     //trimmed user string to get the components of operation, array, operator, and the operand that'll be applied to the array
     let trimmedUserReadlineArrComponents = trimmedUserReadline.components(separatedBy: " ")
+    
+    //print statement to check components of
     //print(trimmedUserReadlineArrComponents)
     
     
@@ -254,6 +240,7 @@ func highOrderCalc() {
         subElementsOfArrayFromUserReadLineAsDouble.append(elementDouble)
     }
     
+    //Print statement to check code
     //print(subElementsOfArrayFromUserReadLineAsDouble)
     
     //switch statment based on userInput to do filter, map, or reduce
@@ -280,10 +267,6 @@ func highOrderCalc() {
     default:
         print("User did not enter a valid high order operation. If this code block is executed. You somehow broke my code. Congrats")
     }
-    
-    //
-//    operationChar = Character(trimmedUserReadlineArrComponents[0])
-    
 }
 
 //Start of calculator to prompt user response
