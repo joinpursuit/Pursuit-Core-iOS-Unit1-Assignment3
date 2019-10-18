@@ -59,6 +59,14 @@ func filterFunction(arr: [Double], closure: (Double) -> Bool) -> [Double] {
     return result
 }
 
+func reduceFunction(arr: [Double], closure: (Double) -> (Double)) -> Double {
+    var reduceResult = 0.0
+    for num in arr{
+        reduceResult += num
+    }
+    return reduceResult
+}
+
 //var userChoice = readLine()
 //func myFilter(inputArray: [Int], filter: Int -> String) -> [Int] {
 //    let filteredResults = inputArray.filter {
@@ -90,15 +98,45 @@ Please enter a "High Order" operation. e.g map 1,5,2,7,3,4 by * 3
         let userInputArr = highOrderInput.components(separatedBy: " ")
         let numAsStringArr = userInputArr[1].components(separatedBy: ",")
         let numAsDouble = numAsStringArr.map{ Double($0) ?? 0.0 }
-        let byNumber = Double(userInputArr[4]) ?? 0.0
-        if userInputArr[0] == "map"{
+        let userNum = Double(userInputArr[4]) ?? 0.0
+        if userInputArr.contains("map"){
             switch userInputArr[3] {
             case "+":
-                let highResult = mapFunction(in: numAsDouble, closure: { $0 + byNumber })
-                print(highResult)
+                let highResultAdd = mapFunction(in: numAsDouble, closure: {$0 + userNum })
+                print(highResultAdd)
+            case "-":
+                let highResultSubtract = mapFunction(in: numAsDouble, closure: {$0 - userNum})
+                print(highResultSubtract)
+            case "*":
+                let highResultMultiply = mapFunction(in: numAsDouble, closure: {$0 * userNum})
+                print(highResultMultiply)
+            case "/":
+                let highResultDivide = mapFunction(in: numAsDouble, closure: {$0 / userNum })
+                print(highResultDivide)
             default:
                 print("jhvdf")
             }
+            if userInputArr.contains("filter"){
+                switch userInputArr[3]{
+                case ">":
+                    let filteredGreaterThan = filterFunction(arr: numAsDouble, closure: { $0 > userNum})
+                    print(filteredGreaterThan)
+                default:
+                    print("sjnfbhdv")
+                }
+            }
+            else if userInputArr.contains("reduce") {
+                switch userInputArr[3] {
+                case "+":
+                    let reduceAdd = reduceFunction(arr: numAsDouble, closure: {$0 + userNum})
+                    print(reduceAdd)
+                case "*":
+                    let reduceMultiply = reduceFunction(arr: numAsDouble, closure: {$0 * userNum})
+                    print(reduceMultiply)
+                default:
+                    print("nookk")
+                }
+        }
 //            let highResult = mapFunction(in: numAsDouble, closure: )
         }
     }
