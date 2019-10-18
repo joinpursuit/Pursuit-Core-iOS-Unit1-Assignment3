@@ -243,7 +243,7 @@ func highOrderCalc() {
     //Print statement to check code
     //print(subElementsOfArrayFromUserReadLineAsDouble)
     
-    //switch statment based on userInput to do filter, map, or reduce
+    //switch statment based on userInput to do filter, map, or reduce and its correct corresponding operation
     
     switch trimmedUserReadlineArrComponents[0].lowercased(){
     case "filter":
@@ -255,6 +255,7 @@ func highOrderCalc() {
             print("User did not enter a valid operator for map function. Consider using < or >")
             highOrderCalc()
         }
+        
     case "map":
         if operationChar == "*" {
             print("mapped results are: ", customMap(arr: subElementsOfArrayFromUserReadLineAsDouble, closure: {$0 * Double(trimmedUserReadlineArrComponents[4])!}))
@@ -264,6 +265,7 @@ func highOrderCalc() {
             print("User did not enter a valid operator for map function. Consider using * or /")
             highOrderCalc()
         }
+        
     case "reduce":
         if operationChar == "+"{
             print("reduced results are: ", customReduce(arr: subElementsOfArrayFromUserReadLineAsDouble, operand: Double(trimmedUserReadlineArrComponents[4])!, reducePair: {$0 + $1}))
