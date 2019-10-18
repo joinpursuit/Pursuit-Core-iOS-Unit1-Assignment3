@@ -27,27 +27,27 @@ func mathStuffFactory(opString: String) -> (Double, Double) -> Double { // take 
 
 func myFilter(inputArray: [Int], filter: (Int) -> Bool) -> [Int] { // filter is a closure that takes an Int and returns a bool
     var filteredArray: [Int] = []
-
+    
     for num in inputArray{
         if filter(num) {
             filteredArray.append(num)
         }
     }
-
-return filteredArray
+    
+    return filteredArray
 }
 
 // Map function:
 
 func customMap(arr: [Int], closure: (Int) -> (Int)) -> [Int]  { // the closure takes an Int and returns an Int after its completed the "transformation"
-var transformedArray = [Int]()
+    var transformedArray = [Int]()
     for num in arr {
         // perform transformation based on closure and append result in transformedArr
         
         transformedArray.append(closure(num)) // closure expacts an argument of type Int
     }
     
-  return transformedArray
+    return transformedArray
 }
 
 // Reduce function:
@@ -68,170 +68,173 @@ func myReduce(arr: [Int], startNum: Int, reduceClosure: (Int, Int) -> (Int)) -> 
 var calcAgain = "no"
 
 repeat {
-print("Enter type of calculation: regular or high order?")
-let calcType = readLine() ?? "no entry"
-
-switch calcType.lowercased() {
+    print("Enter type of calculation: regular or high order?")
+    let calcType = readLine() ?? "no entry"
+    print()
     
-    //====================================
-    // IF THE USER ENTERS REGULAR:
-    //====================================
-    
-case "regular":
-    print("Regular is it")
-    
-    var inputCount = 3
-    var operation = ""
-    var operationComponents = [""]
-    
-    repeat {
-    if inputCount != 5 {
-        print("Please enter value in correct format:")
-    }
-    print("Enter your operation: e.g. 5 + 3")
-    operation = readLine() ?? "no entry"
-    operationComponents = operation.components(separatedBy: " ")
-    inputCount = operationComponents.count
-    } while inputCount != 3
+    switch calcType.lowercased() {
         
-    let operandOne = Double(operationComponents[0])
-    let opt = operationComponents[1]
-    let operandTwo = Double(operationComponents[2])
-    
-    let allowedOpt = ["+", "-", "?", "/", "*"]
-    
-    if allowedOpt.contains(opt) {
+        //====================================
+        // IF THE USER ENTERS REGULAR:
+        //====================================
         
-        if let operand1 = operandOne, let operand2 = operandTwo {
+    case "regular":
+        
+        var inputCount = 3
+        var operation = ""
+        var operationComponents = [""]
+        
+        repeat {
+            if inputCount != 3 {
+                print("Please enter value in correct format:")
+            }
+            print("Enter your operation: e.g. 5 + 3")
+            operation = readLine() ?? "no entry"
+            print()
+            operationComponents = operation.components(separatedBy: " ")
+            inputCount = operationComponents.count
+        } while inputCount != 3
+        
+        let operandOne = Double(operationComponents[0])
+        let opt = operationComponents[1]
+        let operandTwo = Double(operationComponents[2])
+        
+        let allowedOpt = ["+", "-", "?", "/", "*"]
+        
+        if allowedOpt.contains(opt) {
             
-            
-            if opt == "?" {
-                print("Play Random guessing game")
+            if let operand1 = operandOne, let operand2 = operandTwo {
                 
-                let optArray = ["+", "-", "/", "*"]
-                
-                let randomOpt = optArray.randomElement() ?? "+"
-                print(randomOpt) // just to check w
-                let closureOperation = mathStuffFactory(opString: randomOpt)
-                let result = closureOperation(Double(operand1), Double(operand2))
-                print("\(operation) = \(result)")
-                var guess = ""
-                
-                repeat {
-                    print("Guess the operation")
-                    guess = readLine() ?? "+"
+                if opt == "?" {
+                    print("Play Random guessing game")
                     
-                    if guess == randomOpt {
-                        print("correct")
-                    } else {
-                        print("wrong")
-                    }
+                    let optArray = ["+", "-", "/", "*"]
                     
-                } while guess != randomOpt
+                    let randomOpt = optArray.randomElement() ?? "+"
+                    let closureOperation = mathStuffFactory(opString: randomOpt)
+                    let result = closureOperation(Double(operand1), Double(operand2))
+                    print("\(operation) = \(result)")
+                    var guess = ""
+                    
+                    repeat {
+                        print("Guess the operation")
+                        guess = readLine() ?? "+"
+                        
+                        if guess == randomOpt {
+                            print("correct")
+                        } else {
+                            print("wrong")
+                        }
+                        
+                    } while guess != randomOpt
+                    
+                } else {
+                    
+                    let closureOperation = mathStuffFactory(opString: opt)
+                    let result = closureOperation(Double(operand1), Double(operand2))
+                    print("\(operation) = \(result)")
+                    print()
+                }
                 
             } else {
-                
-                let closureOperation = mathStuffFactory(opString: opt)
-                let result = closureOperation(Double(operand1), Double(operand2))
-                print("\(operation) = \(result)")
+                print("Please enter your calculation in the correct format e.g. 5 + 3")
             }
             
         } else {
-            print("Please enter your calculation in the correct format e.g. 5 + 3")
+            print("Unknown operator: \(opt)")
         }
+        //====================================
+        // IF THE USER ENTERS HIGHER ORDER
+        //====================================
         
-    } else {
-        print("Unknown operator: \(opt)")
-    }
-    //====================================
-    // IF THE USER ENTERS HIGHER ORDER
-    //====================================
-    
-case "high order":
-    
-    print("High order it is ")
-    var inputCount = 5
-    var operation = ""
-    var operationComponents = [""]
-    
-    repeat {
-    if inputCount != 5 {
-        print("Please enter value in correct format:")
-    }
+    case "high order":
         
-    print("Enter your operation e.g filter 1,5,2,7,3,4 by < 4")
-    operation = readLine() ?? "no entry"
-    operationComponents = operation.components(separatedBy: " ")
-    inputCount = operationComponents.count
-    } while inputCount != 5
+        var inputCount = 5
+        var operation = ""
+        var operationComponents = [""]
+        
+        repeat {
+            if inputCount != 5 {
+                print("Please enter value in correct format:")
+            }
+            
+            print("Enter your operation e.g filter 1,5,2,7,3,4 by < 4")
+            operation = readLine() ?? "no entry"
+            operationComponents = operation.components(separatedBy: " ")
+            inputCount = operationComponents.count
+        } while inputCount != 5
+        
+        
+        let numArrayAsStr = operationComponents[1].components(separatedBy: ",")
+        let numArrayAsInt =  numArrayAsStr.map{Int($0) ?? 0} // the numbers as an array of Int
+        print()
 
-    
-    let numArrayAsStr = operationComponents[1].components(separatedBy: ",")
-    let numArrayAsInt =  numArrayAsStr.map{Int($0) ?? 0} // the numbers as an array of Int
-    
-    if operation.hasPrefix("filter") {
+        if operation.hasPrefix("filter") {
+            
+            let comparingType = operationComponents[3]
+            let comparingNum = Int(operationComponents[operationComponents.count - 1]) ?? 0
+            
+            switch comparingType {
+            case ">":
+                print("Result = \(myFilter(inputArray: numArrayAsInt, filter: {$0 > comparingNum}))")
                 
-        let comparingType = operationComponents[3]
-        let comparingNum = Int(operationComponents[operationComponents.count - 1]) ?? 0
-        
-        switch comparingType {
-        case ">":
-            print("\(operation) = \(myFilter(inputArray: numArrayAsInt, filter: {$0 > comparingNum}))")
-
-        case "<":
-            print("\(operation) = \(myFilter(inputArray: numArrayAsInt, filter: {$0 < comparingNum}))")
-
-        case "%":
-            print("\(operation) = \(myFilter(inputArray: numArrayAsInt, filter: {$0 % comparingNum == 0}))") // what ever is in the filter has to return a Bool!!!!
-        default:
-            print("I do not recognize your operator: \(comparingType). Please check your format.")
-
-        }
-
-    } else if operation.hasPrefix("map") {
-        
-        let mappingType = operationComponents[3]
-        let mappingNum = Int(operationComponents[operationComponents.count - 1]) ?? 0
-        
-        switch mappingType {
-        case "*":
-            print(customMap(arr: numArrayAsInt , closure: {$0 * mappingNum}))
-        case "+":
-            print(customMap(arr: numArrayAsInt , closure: {$0 + mappingNum}))
-        case "-":
-            print(customMap(arr: numArrayAsInt , closure: {$0 - mappingNum}))
-        case "/":
-            print(customMap(arr: numArrayAsInt , closure: {$0 / mappingNum}))
-        default:
-            print("I do not recognize your operator: \(mappingType). Please check your format.")
-        }
-
-    } else if operation.hasPrefix("reduce") {
-        let reducingType = operationComponents[3]
-        let reducingNum = Int(operationComponents[operationComponents.count - 1]) ?? 0
-        
-        if reducingType == "+" {
+            case "<":
+                print("Result = \(myFilter(inputArray: numArrayAsInt, filter: {$0 < comparingNum}))")
+                
+            case "%":
+                print("Result = \(myFilter(inputArray: numArrayAsInt, filter: {$0 % comparingNum == 0}))") // what ever is in the filter has to return a Bool!!!!
+            default:
+                print("I do not recognize your operator: \(comparingType). Please check your format.")
+                
+            }
             
-        print(myReduce(arr: numArrayAsInt, startNum: reducingNum, reduceClosure: {$0 + $1}))
-        } else if reducingType == "*" {
+        } else if operation.hasPrefix("map") {
             
-        print(myReduce(arr: numArrayAsInt, startNum: reducingNum, reduceClosure: {$0 * $1}))
+            let mappingType = operationComponents[3]
+            let mappingNum = Int(operationComponents[operationComponents.count - 1]) ?? 0
+            
+            switch mappingType {
+            case "*":
+                print("Result = \(customMap(arr: numArrayAsInt , closure: {$0 * mappingNum}))")
+            case "+":
+                print("Result = \(customMap(arr: numArrayAsInt , closure: {$0 + mappingNum}))")
+            case "-":
+                print("Result = \(customMap(arr: numArrayAsInt , closure: {$0 - mappingNum}))")
+            case "/":
+                print("Result = \(customMap(arr: numArrayAsInt , closure: {$0 / mappingNum}))")
+            default:
+                print("I do not recognize your operator: \(mappingType). Please check your format.")
+            }
+            
+        } else if operation.hasPrefix("reduce") {
+            let reducingType = operationComponents[3]
+            let reducingNum = Int(operationComponents[operationComponents.count - 1]) ?? 0
+            
+            if reducingType == "+" {
+                
+                print("Result = \(myReduce(arr: numArrayAsInt, startNum: reducingNum, reduceClosure: {$0 + $1}))")
+            } else if reducingType == "*" {
+                
+                print("Result = \(myReduce(arr: numArrayAsInt, startNum: reducingNum, reduceClosure: {$0 * $1}))")
+            } else {
+                print("I do not recognize your operator: \(reducingType). Please check your format.")
+            }
+            
         } else {
-            print("I do not recognize your operator: \(reducingType). Please check your format.")
+            print("Could not recognize your high order function.")
         }
+        // }
         
-    } else {
-        print("Could not recognize your high order function.")
+    default:
+        print("Type not recognized")
+        print("Possible errors: Spelling or Spacing.")
+        
     }
-   // }
-    
-default:
-    print("You have to choose a type. ")
-
-}
-print("Calculate again? yes or no?")
+    print()
+    print("Calculate again? yes or no?")
     calcAgain = readLine() ?? "no"
-
+    print()
+    
 } while calcAgain.lowercased() == "yes"
 
-
+print("Happy calculating! 🥳 See you next time!")
