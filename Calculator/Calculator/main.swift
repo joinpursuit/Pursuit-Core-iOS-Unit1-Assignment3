@@ -58,12 +58,13 @@ pickCalculatorLoop: repeat {
         print("Map: number +,-,*,/ by a number. example: \"Map 1,2,3 by * 3\" = 2,4,6 ")
         print("Reduce: creating a sum of numbers, multiplying an array")
         
-        //map
         var Input = readLine() ?? "0"
         var userInputArr = Input.components(separatedBy: " ")
         var numAsStringArr = userInputArr[1].components(separatedBy: ",")
         var numAsDouble = numAsStringArr.map{ Double($0) ?? Double(0.0) }
         var byNumber = userInputArr[4]
+        
+        //map function
         func map(arr: [Double], closure: (Double) -> Double ) -> [Double] {
             var result = [Double]()
             for num in arr {
@@ -72,7 +73,7 @@ pickCalculatorLoop: repeat {
             return result
         }
         
-        // filter
+        // filter function
         func filter(arr: [Double], closure: (Double) -> Bool) -> [Double] {
             var result = [Double]()
             for num in arr {
@@ -82,8 +83,25 @@ pickCalculatorLoop: repeat {
             }
             return result
         }
+        // reduced
+        // reduced product
+        func reducedProduct(arr: [Double], closure: (Double) -> Double) -> Double {
+            var result = Double()
+            for num in arr[0..<arr.count] {
+                result = num * num
+            }
+            return result
+        }
+        // reduced sum
+        func reducedSum(arr: [Double], closure: (Double) -> Double) -> Double {
+            var result = Double()
+            for num in arr[0..<arr.count] {
+                result += num
+            }
+            return result
+        }
         
-        //applied
+        //map applied
         if userInputArr[0] == "map" {
             switch userInputArr[3] {
             case "*":
@@ -102,6 +120,7 @@ pickCalculatorLoop: repeat {
                 print("Not valid")
                 print("Try typing: \"Map 1,2,3 by * 3\" ")
             }
+            //filter applied
             } else if userInputArr[0] == "filter" {
                 switch userInputArr[3] {
                 case ">":
@@ -113,8 +132,21 @@ pickCalculatorLoop: repeat {
                 default:
                     print("Not valid")
                     print("Try typing: \"Filter 1,2,3 by < 4\" ")
-                }
-        }
+            }
+            } else if userInputArr[0] == "reduce" {
+            switch userInputArr[3] {
+            case "+" :
+                let results = reducedSum(arr: numAsDouble , closure: {$0 + (Double(byNumber) ?? 0.0) })
+                print(results)
+            case "*" :
+                let results = reducedProduct(arr: numAsDouble, closure: {$0 * (Double(byNumber) ?? 1.0)})
+                print(results)
+            default:
+                print("Not valid")
+                print("Try typing: \"reduce 1,2,3,4 by * 1\" or \"reduce 1,2,3,4 by + 0\"")
+            }
+            }
+        
     default :
         print("Sorry, can't do that. I'm just a calculator.")
         print("Try a math problem.")
