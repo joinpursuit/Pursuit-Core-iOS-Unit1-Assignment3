@@ -118,16 +118,30 @@ func basicCalculation(operandEntry : String?, termOne : Double?, termTwo : Doubl
 // call function use tuple parts for necessary arguments for function into dictionary closure
 basicCalculation(operandEntry: operandTuple, termOne : firstTermTuple, termTwo: secondTermTuple, operationsClosure: operations)
 //------------------------------------High Order--------------------------------------
+var numArray : [Int] = []
+
 func myFilter(inputArray: [Int], filter: (Int) -> Bool) -> [Int] {
     
     return[4]
 }
 
+// Take High order string and cut out and convert the int array called numArray
 print("Enter High order calculation(e.g. filter 1,2,3,4,5,6 by < 6): ")
-let highOrderEntry = readLine()
-let orderEntryParts = highOrderEntry?.components(separatedBy: ",")
+let highOrderEntry = readLine() ?? " "
+let orderEntryParts = highOrderEntry.components(separatedBy: " ")
 
-print(orderEntryParts ?? "")
+let numString = orderEntryParts[1]
+let numStringArray = numString.components(separatedBy: ",")
+
+for strNum in numStringArray {
+    let strToInt = Int(strNum)
+    numArray.append(strToInt ?? 0)
+}
+
+print(numArray)
+
+
+
 
 //let filteredList = myFilter(inputArray: <#T##[Int]#>, filter: <#T##(Int) -> Bool#>)
 
