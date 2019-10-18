@@ -169,18 +169,13 @@ continueloop: repeat {
                 switch userHighArr[3] {
                 case "+":
                     let reduceAns = builtInReduce(arr: numAsDouble, closure: {$0 + num})
-                    print(reduceAns)
+                    print(reduceAns + num)
                 case "*":
                     let reduceAns = builtInReduce(arr: numAsDouble, closure: {$0 * num})
-                    print(reduceAns)
+                    print(reduceAns * num)
                 default:
                     print("yup")
                 }
-                
-                
-                
-                
-                
             }
           correctUserChoice = true
           default:
