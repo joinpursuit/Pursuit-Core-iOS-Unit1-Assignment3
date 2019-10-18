@@ -44,9 +44,9 @@ func arithemticCalcution(in input: String) -> Double {
 func mapFunction(in inputArray: [Double], closure: (Double) -> Double) -> [Double] {
     var userInputArr = [Double]()
     for num in inputArray{
-        userInputArr.append(num)
+        userInputArr.append(closure(num))
     }
-    return inputArray
+    return userInputArr
 }
 
 func filterFunction(arr: [Double], closure: (Double) -> Bool) -> [Double] {
@@ -99,8 +99,8 @@ Please enter a "High Order" operation. e.g map 1,5,2,7,3,4 by * 3
         let numAsStringArr = userInputArr[1].components(separatedBy: ",")
         let numAsDouble = numAsStringArr.map{ Double($0) ?? 0.0 }
         let userNum = Double(userInputArr[4]) ?? 0.0
-        if userInputArr.contains("map"){
-            switch userInputArr[3] {
+        if userInputArr.contains("map") {
+            switch userInputArr[3] { // e.g
             case "+":
                 let highResultAdd = mapFunction(in: numAsDouble, closure: {$0 + userNum })
                 print(highResultAdd)
@@ -114,9 +114,10 @@ Please enter a "High Order" operation. e.g map 1,5,2,7,3,4 by * 3
                 let highResultDivide = mapFunction(in: numAsDouble, closure: {$0 / userNum })
                 print(highResultDivide)
             default:
-                print("jhvdf")
+                print("Please enter a valid format. e.g map 1,5,2,7,3,4 by * 3")
             }
-            if userInputArr.contains("filter"){
+        }
+        else if userInputArr.contains("filter") {
                 switch userInputArr[3]{
                 case ">":
                     let filteredGreaterThan = filterFunction(arr: numAsDouble, closure: { $0 > userNum})
@@ -125,7 +126,7 @@ Please enter a "High Order" operation. e.g map 1,5,2,7,3,4 by * 3
                     let filteredLessThan = filterFunction(arr: numAsDouble, closure: {$0 < userNum})
                     print(filteredLessThan)
                 default:
-                    print("sjnfbhdv")
+                    print("Please enter a valid format. e.g map 1,5,2,7,3,4 by < 3")
                 }
             }
             else if userInputArr.contains("reduce") {
@@ -137,14 +138,11 @@ Please enter a "High Order" operation. e.g map 1,5,2,7,3,4 by * 3
                     let reduceMultiply = reduceFunction(arr: numAsDouble, closure: {$0 * userNum})
                     print(reduceMultiply * Double(userInputArr[4])!)
                 default:
-                    print("nookk")
+                    print("Please enter a valid format. e.g map 1,5,2,7,3,4 by * 3")
                 }
         }
-//            let highResult = mapFunction(in: numAsDouble, closure: )
         }
-    }
-
-} while true
+    } while true
 
 
 
