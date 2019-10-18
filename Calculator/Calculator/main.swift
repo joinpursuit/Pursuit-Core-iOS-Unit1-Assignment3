@@ -84,16 +84,7 @@ pickCalculatorLoop: repeat {
             return result
         }
         // reduced
-        // reduced product
-        func reducedProduct(arr: [Double], closure: (Double) -> Double) -> Double {
-            var result = Double()
-            for num in arr[0..<arr.count] {
-                result = num * num
-            }
-            return result
-        }
-        // reduced sum
-        func reducedSum(arr: [Double], closure: (Double) -> Double) -> Double {
+        func reduced(arr: [Double], closure: (Double) -> Double) -> Double {
             var result = Double()
             for num in arr[0..<arr.count] {
                 result += num
@@ -136,11 +127,11 @@ pickCalculatorLoop: repeat {
             } else if userInputArr[0] == "reduce" {
             switch userInputArr[3] {
             case "+" :
-                let results = reducedSum(arr: numAsDouble , closure: {$0 + (Double(byNumber) ?? 0.0) })
-                print(results)
+                let results = reduced(arr: numAsDouble , closure: {$0 + (Double(byNumber) ?? 0.0) })
+                print(results + (Double(byNumber) ?? 0.0))
             case "*" :
-                let results = reducedProduct(arr: numAsDouble, closure: {$0 * (Double(byNumber) ?? 1.0)})
-                print(results)
+                let results = reduced(arr: numAsDouble, closure: {$0 + (Double(byNumber) ?? 1.0)})
+                print(results * (Double(byNumber) ?? 1.0))
             default:
                 print("Not valid")
                 print("Try typing: \"reduce 1,2,3,4 by * 1\" or \"reduce 1,2,3,4 by + 0\"")
