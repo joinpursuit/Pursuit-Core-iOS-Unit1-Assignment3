@@ -117,10 +117,11 @@ func basicCalculation(operandEntry : String?, termOne : Double?, termTwo : Doubl
 
 // call function use tuple parts for necessary arguments for function into dictionary closure
 basicCalculation(operandEntry: operandTuple, termOne : firstTermTuple, termTwo: secondTermTuple, operationsClosure: operations)
-//------------------------------------High Order--------------------------------------
+//------------------------------------HighOrder--------------------------------------
 var numArray : [Int] = []
 
-// Take High order string and cut out and convert the int array called numArray
+//  Take High order string and cut out and convert the int array called numArray
+//  ***Collect all the parts to do High order Functions***
 print("Enter High order calculation(e.g. filter 1,2,3,4,5,6 by < 6): ")
 let highOrderEntry = readLine() ?? " "
 let orderEntryParts = highOrderEntry.components(separatedBy: " ")
@@ -128,65 +129,48 @@ let orderEntryParts = highOrderEntry.components(separatedBy: " ")
 let numString = orderEntryParts[1]
 let numStringArray = numString.components(separatedBy: ",")
 
+// grab in filter number at end, and > or <
+let filterNum = Int(orderEntryParts[4])
+let pacMan = orderEntryParts[3]
+
 for strNum in numStringArray {
     let strToInt = Int(strNum)
     numArray.append(strToInt ?? 0)
 }
 
-let filterNum = Int(numStringArray[9])
-let pacMan = numStringArray[8]
+let greaterThan = pacMan == ">"
+let lessThan = pacMan == "<"
 
-let filterize = {
-    var filteredNums = [Int]()
-    if pacMan == ">"    {
-        for num in numArray {
-            if num > filterNum ?? 0  {
-                filteredNums.append(num)
-            }
+//  Use all the parts necessary for High Order in the different Calculations
+
+//===================================================================================
+//                                      Filter
+//===================================================================================
+func filterizeClosureMethod(inputArray: [Int], filter: (Int) -> Bool) -> [Int] {
+    var intArr = [Int]()
+    for input in inputArray {
+        if filter(input)    {
+            intArr.append(input)
         }
     }
-    else    {
-        for num in numArray {
-            if num < filterNum ?? 0  {
-                filteredNums.append(num)
-            }
-        }
+    return intArr
+}
+
+func myFilter(filterNumber: Int) -> Bool    {
+    var operation : Bool = Bool()
+    if greaterThan  {
+        operation = filterNumber > filterNum ?? 0
     }
+    else if lessThan    {
+        operation = filterNumber < filterNum ?? 0
+    }
+    return operation
 }
 
+let filteredList = filterizeClosureMethod(inputArray: numArray, filter: myFilter)
 
-func myFilter(inputArray: [Int], filter: (Int) -> Bool) -> [Int] {
-    let intArr = [Int]()
-    
-    
-    
-    return []
-}
+print(filteredList)
 
-func filterizeClosureMethod()    {
-    
-}
-
-//let closureFilter = myFilter()
-
-print(numArray)
-
-
-
-
-//let filteredList = myFilter(inputArray: <#T##[Int]#>, filter: <#T##(Int) -> Bool#>)
-
-
-
-
-
-/*
-let closureOperation = mathStuffFactory(opString: "+")
-let result = closureOperation(45.0, 5.0)
-print("result of operation is \(result)")
-*/
-
-//if let validTermOne = operationString.0 {}
-
-// user will enter something like 5 + 3
-// let array = str.components(separatedBy: ", ")
+//===================================================================================
+//                                      Map
+//===================================================================================
