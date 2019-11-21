@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "B15E6FAC-0426-406A-887D-F8AF32A38FF8"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5E390134-B788-4242-958E-A09D694D19E2"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Calculator/main.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
+            landmarkName = "mathStuffFactory(opString:)"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  uuid = "5E390134-B788-4242-958E-A09D694D19E2 - cb61eccd64aa2363"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Calculator.mathStuffFactory(opString: Swift.String) -&gt; (Swift.Double, Swift.Double) -&gt; Swift.Double"
+                  moduleName = "Calculator"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yuliiaengmanpursuit/Documents/Pursuit-Core-iOS-Unit1-Assignment3/Calculator/Calculator/main.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "289">
+               </Location>
+               <Location
+                  uuid = "5E390134-B788-4242-958E-A09D694D19E2 - 9eb0278cd45d5325"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Double, Swift.Double) -&gt; Swift.Double in Calculator.mathStuffFactory(opString: Swift.String) -&gt; (Swift.Double, Swift.Double) -&gt; Swift.Double"
+                  moduleName = "Calculator"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yuliiaengmanpursuit/Documents/Pursuit-Core-iOS-Unit1-Assignment3/Calculator/Calculator/main.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "30">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
